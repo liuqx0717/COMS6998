@@ -1,5 +1,4 @@
-'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
-'*.liuqx.net'
+Use the following command to test the APIs on your local machine.
 
 curl -v -X GET https://d8gfeh0aeg.execute-api.us-east-2.amazonaws.com/v1/message
 
