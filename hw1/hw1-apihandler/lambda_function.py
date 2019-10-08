@@ -1,4 +1,24 @@
 import json
+import boto3
+
+def process_msg(text, id):
+    client = boto3.client('lex-runtime', region_name='us-east-1',
+                      aws_access_key_id='AKIAXW2QQWOVNDX6POUJ',
+                      aws_secret_access_key='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')
+
+    resp = client.post_content(
+        botName='DiningBot',
+        botAlias='DiningBotBETA',
+        userId=userId,
+        sessionAttributes={},
+        contentType="text/plain; charset=utf-8",
+        inputStream=query
+
+    )
+
+    return resp['ResponseMetadata']['HTTPHeaders']['x-amz-lex-message']
+
+
 
 def lambda_handler(event, context):
     # TODO implement
