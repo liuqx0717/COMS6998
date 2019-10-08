@@ -30,7 +30,7 @@ git push
 
 ## Committing your changes to the master branch
 
-1. Check if all your changes have been committed to your branch.
+1. Check if there are changes that haven't been committed yet.
 
 ```
 git status
