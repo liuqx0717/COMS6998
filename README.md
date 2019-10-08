@@ -71,7 +71,7 @@ git branch -d mybranch
 
 Suppose that you make two commits `E` and `F` to the `master` branch of your local repository. In the mean time, someone else makes two commits `E'` and `F'` to the `master` branch of the remote repository, as shown below:
 
-![branch-graph](/github-instructions-1.svg)
+![branch-graph](/github-instructions-1.png)
 
 In this case, you cannot push your commits to the remote `master` branch. `git` will insist you run `git pull` on your local `master` branch first, before you can push it. 
 
