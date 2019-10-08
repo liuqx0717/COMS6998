@@ -69,7 +69,7 @@ git branch -d mybranch
 
 ## Why not directly commit to `master` branch?
 
-Suppose that you make two commits `E` and `F` to the `master` branch of your local repository. In the mean time, someone else makes two commits `E'` and `F'` to the `master` branch of the remote repository, which is shown below:
+Suppose that you make two commits `E` and `F` to the `master` branch of your local repository. In the mean time, someone else makes two commits `E'` and `F'` to the `master` branch of the remote repository, as shown below:
 
 ![branch-graph](/github-instructions-1.svg)
 
