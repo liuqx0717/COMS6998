@@ -1,0 +1,16 @@
+'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+'*.liuqx.net'
+
+curl -v -X GET https://d8gfeh0aeg.execute-api.us-east-2.amazonaws.com/v1/message
+
+curl -v -X GET https://api.hw1.liuqx.net/v1/message
+
+
+curl -v -X OPTIONS https://d8gfeh0aeg.execute-api.us-east-2.amazonaws.com/v1/message
+
+curl -v -X OPTIONS https://api.hw1.liuqx.net/v1/message
+
+
+curl -v -d '{"content": "hello!!!"}' -H "Content-Type: application/json" -X POST https://d8gfeh0aeg.execute-api.us-east-2.amazonaws.com/v1/message
+
+curl -v -d '{"content": "hello!!!"}' -H "Content-Type: application/json" -X POST https://api.hw1.liuqx.net/v1/message

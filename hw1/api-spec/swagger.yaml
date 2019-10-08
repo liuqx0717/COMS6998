@@ -1,0 +1,54 @@
+swagger: "2.0"
+info:
+  description: "COMS E6998 hw1"
+  version: "1.0.0"
+  title: "Dining Concierge Chatbot"
+host: "api.hw1.liuqx.net"
+basePath: "/v1"
+
+tags:
+- name: "message"
+  description: "Send a message to the server."
+
+schemes:
+- "https"
+
+paths:
+  /message:
+    post:
+      tags:
+      - "message"
+      summary: "Send a message to the chatbot."
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "The content sent to the chatbot"
+        required: true
+        schema:
+          $ref: "#/definitions/Message"
+      responses:
+        200:
+          description: "Successful operation.\nReturn value: the response message."
+          schema:
+            $ref: "#/definitions/Message"
+        405:
+          description: "Invalid input"
+
+
+definitions:
+  Message:
+    type: "object"
+    required:
+    - "content"
+    properties:
+      content: 
+        type: "string"
+    xml:
+      name: "Message"
+      
