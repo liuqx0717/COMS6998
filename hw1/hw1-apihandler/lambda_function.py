@@ -1,6 +1,7 @@
 import json
 import string
 import random
+import boto3
 
 headers = {
     "access-control-allow-origin": "https://hw1.liuqx.net",
@@ -11,26 +12,36 @@ headers = {
 def lambda_handler(event, context):
     # TODO implement
 
-    try:
+    #try:
         if event["resource"] == "/message":
             if event["httpMethod"] == "POST":
-                try:
+                #try:
                     bodyJson = event["body"]
                     body = json.loads(bodyJson)
                     msg = body["content"]
                     id = body["sessionid"]
                     
                     # TODO: invoke lex
+                    boto3.setup_default_session(region_name='us-east-1')
+                    client = boto3.client('lambda')
+                    response = client.invoke(
+                        FunctionName='arn:aws:lambda:us-east-1:530060456874:function:LF0',
+                        Payload=json.dumps({'query':msg, 'userId': id}).encode("utf-8")
+                    )
+                    
+                    response_payload = json.loads(response["Payload"].read().decode("utf-8"))
+                    
+                    print(response_payload)
                     
                     return make_response(
                         200, 
                         {
                             "sessionid": id,
-                            "content": msg
+                            "content": response_payload["content"]
                         }
                     )
 
-                except Exception as err:
+                #except Exception as err:
                     return make_response(405, "Invalid input: " + bodyJson)
 
         if event["resource"] == "/session":
@@ -46,7 +57,7 @@ def lambda_handler(event, context):
         # if resource/method not listed above
         return make_response(400, "Bad request.")
 
-    except:
+    #except:
         return make_response(500, "Internal error - hw1-apihandlerapi.")
 
 
