@@ -197,6 +197,7 @@ font-style: italic;
   <h4><a href="#Message">Message</a></h4>
   <ul>
   <li><a href="#messagePost"><code><span class="http-method">post</span> /message</code></a></li>
+  <li><a href="#sessionGet"><code><span class="http-method">get</span> /session</code></a></li>
   </ul>
 
   <h1><a name="Message">Message</a></h1>
@@ -238,10 +239,12 @@ font-style: italic;
     <div class="example-data-content-type">Content-Type: application/xml</div>
     <pre class="example"><code><Message>
   <content>aeiou</content>
+  <sessionid>aeiou</sessionid>
 </Message></code></pre>
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
+  "sessionid" : "sessionid",
   "content" : "content"
 }</code></pre>
 
@@ -263,6 +266,62 @@ Return value: the response message.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="sessionGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /session</code></pre></div>
+    <div class="method-summary">Get a session id. (<span class="nickname">sessionGet</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SessionId">SessionId</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/xml</div>
+    <pre class="example"><code><SessionId>
+  <sessionid>aeiou</sessionid>
+</SessionId></code></pre>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "sessionid" : "sessionid"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/xml</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation.
+Return value: the session id.
+        <a href="#SessionId">SessionId</a>
+    <h4 class="field-label">503</h4>
+    Service unavailable.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
 
   <h2><a name="__Models">Models</a></h2>
   [ Jump to <a href="#__Methods">Methods</a> ]
@@ -270,6 +329,7 @@ Return value: the response message.
   <h3>Table of Contents</h3>
   <ol>
     <li><a href="#Message"><code>Message</code> - </a></li>
+    <li><a href="#SessionId"><code>SessionId</code> - </a></li>
   </ol>
 
   <div class="model">
@@ -277,6 +337,14 @@ Return value: the response message.
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">content </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">sessionid </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SessionId"><code>SessionId</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">sessionid </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   </body>

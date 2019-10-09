@@ -8,7 +8,7 @@ basePath: "/v1"
 
 tags:
 - name: "message"
-  description: "Send a message to the server."
+  description: "Send a message to the server, and get the response message."
 
 schemes:
 - "https"
@@ -39,16 +39,47 @@ paths:
             $ref: "#/definitions/Message"
         405:
           description: "Invalid input"
-
+          
+  /session:
+    get:
+      tags:
+      - "message"
+      summary: "Get a session id."
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "Successful operation.\nReturn value: the session id."
+          schema:
+            $ref: "#/definitions/SessionId"
+        503:
+          description: "Service unavailable."
 
 definitions:
   Message:
     type: "object"
     required:
+    - "sessionid"
     - "content"
     properties:
       content: 
         type: "string"
+      sessionid:
+        type: "string"
     xml:
       name: "Message"
+      
+  SessionId:
+    type: "object"
+    required: 
+    - "sessionid"
+    properties:
+      sessionid:
+        type: "string"
+    xml:
+     name: "SessionId"
       

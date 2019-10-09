@@ -44,7 +44,7 @@ function insertChat(who, text, time){
                   '</li>';
     }
     setTimeout(
-        function(){                        
+        function(){ 
             $("ul").append(control).scrollTop($("ul").prop('scrollHeight'));
         }, time);
     
@@ -75,15 +75,46 @@ resetChat();
 
 
 var baseUrl = "https://api.hw1.liuqx.net/v1/";
-var apiUrl = baseUrl + "message";
+var api_message = baseUrl + "message";
+var api_session = baseUrl + "session";
+var sessionid = "NULL";
+
+
+getSessionid();
+
+
+// The return value will reside in variable "sessionid".
+function getSessionid(){
+    $.ajax({
+        type: "GET",
+        url: api_session,
+        crossDomain: true,
+        data: "",
+        //data:"SDfsfsddf",
+        dataType: "json",
+        success: function(response){
+            //alert("received.");
+            // No need to use JSON.parse(), because dataType set to "json".
+            sessionid = response.sessionid;
+        },
+        error: function(xhr, status, error){
+            alert("getSessionid() failed.\n" + xhr.responseText + "\n" + status + "\n" + error);
+        }
+    });
+}
 
 function sendMsg(text){
     //alert(apiUrl);
+    if(sessionid == "NULL") {
+        alert("No available session id.");
+        return;
+    }
     $.ajax({
         type: "POST",
-        url: apiUrl,
+        url: api_message,
         crossDomain: true,
         data: JSON.stringify({
+            sessionid: sessionid,
             content: text
         }),
         //data:"SDfsfsddf",
@@ -94,7 +125,7 @@ function sendMsg(text){
             recvMsg(response.content);
         },
         error: function(xhr, status, error){
-            alert("failed.\n" + xhr.responseText + "\n" + status + "\n" + error);
+            alert("sendMsg() failed.\n" + xhr.responseText + "\n" + status + "\n" + error);
         }
     });
 }
