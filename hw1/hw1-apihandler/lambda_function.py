@@ -12,10 +12,10 @@ headers = {
 def lambda_handler(event, context):
     # TODO implement
 
-    #try:
+    try:
         if event["resource"] == "/message":
             if event["httpMethod"] == "POST":
-                #try:
+                try:
                     bodyJson = event["body"]
                     body = json.loads(bodyJson)
                     msg = body["content"]
@@ -31,7 +31,7 @@ def lambda_handler(event, context):
                     
                     response_payload = json.loads(response["Payload"].read().decode("utf-8"))
                     
-                    print(response_payload)
+                    #print(response_payload)
                     
                     return make_response(
                         200, 
@@ -41,7 +41,8 @@ def lambda_handler(event, context):
                         }
                     )
 
-                #except Exception as err:
+                except Exception as err:
+                    print(err)
                     return make_response(405, "Invalid input: " + bodyJson)
 
         if event["resource"] == "/session":
@@ -51,13 +52,14 @@ def lambda_handler(event, context):
                     return make_response(200, {"sessionid": sessionid})
 
                 except Exception as err:
+                    print(err)
                     return make_response(503, "Service unavailable.")
 
 
         # if resource/method not listed above
         return make_response(400, "Bad request.")
 
-    #except:
+    except:
         return make_response(500, "Internal error - hw1-apihandlerapi.")
 
 
