@@ -19,17 +19,16 @@ def process_msg(text, id):
     return resp['ResponseMetadata']['HTTPHeaders']['x-amz-lex-message']
 
 
+headers = {
+    "access-control-allow-origin": "*",
+    "access-control-allow-headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "access-control-allow-methods": "GET,OPTIONS,POST"
+}
 
 def lambda_handler(event, context):
     # TODO implement
 
     try:
-        headers = {
-            "access-control-allow-origin": "*",
-            "access-control-allow-headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-            "access-control-allow-methods": "GET,OPTIONS,POST"
-        }
-
         if event["resource"] == "/message":
             if event["httpMethod"] == "POST":
                 try:
@@ -38,30 +37,25 @@ def lambda_handler(event, context):
                     msg = body["content"]
 
                     
-                    return {
-                        "statusCode": 200,
-                        "body": json.dumps({
-                            "content": msg
-                        }),
-                        "headers": headers
-                    }
+                    return make_response(200, {"content": msg})
+
                 except Exception as err:
-                    return {
-                        "statusCode": 405,
-                        "body": json.dumps("Invalid input: " + bodyJson),
-                        "headers": headers
-                    }
+                    return make_response(405, "Invalid input: " + bodyJson)
 
         # if resource/method not listed above
-        return {
-            "statusCode": 400,
-            "body": json.dumps("Bad request."),
-            "headers": headers
-        }
+        return make_response(400, "Bad request.")
 
     except:
-        return {
-            "statusCode": 500,
-            "body": json.dumps("Internal error - hw1-apihandlerapi."),
-            "headers": headers
-        }
+        return make_response(500, "Internal error - hw1-apihandlerapi.")
+
+
+
+# examples:
+#     code=200, body={"content": "hello!"}
+#     code=400, body={"Invalid input."}
+def make_response(code, body):
+    return {
+        "statusCode": code,
+        "body": json.dumps(body),
+        "headers": headers
+    }
