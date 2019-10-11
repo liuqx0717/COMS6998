@@ -68,5 +68,5 @@ def lambda_handler(event, context):
     # TODO implement
     return {
         'statusCode': 200,
-        'body': db_response["Item"] # json.dumps(response)
+        'body': db_response["Item"]
     }
