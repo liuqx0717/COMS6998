@@ -29,7 +29,7 @@ payload = {
         "function_score": {
             "functions": [
                 {"filter": {"term": {"categories": "init"}}, "weight": "1"},
-                {"random_score": {"seed": "1"}}
+                {"random_score": {"seed": "0"}}
             ],
             "score_mode": "sum"
         }
@@ -37,7 +37,6 @@ payload = {
 }
 
 payload["query"]["function_score"]["functions"][0]["filter"]["term"]["categories"] = category
-payload["query"]["function_score"]["functions"][1]["random_score"]["seed"] = 0
 
 while 1:
     payload["query"]["function_score"]["functions"][1]["random_score"]["seed"] += 1
@@ -48,7 +47,7 @@ while 1:
         json=payload)
     es_response = json.loads(r.text)
     business_id = es_response["hits"]["hits"][0]["_source"]["business_id"]
-    if business_id != "#NAME?":  # Due to defects of dataset, some "business_id" is "#NAME?". Do another search if so.
+    if business_id != "#NAME?":  # Due to defects of orignal dataset, some "business_id" is "#NAME?". Do another search if so.
         break
 
 # query in dynamodb:
