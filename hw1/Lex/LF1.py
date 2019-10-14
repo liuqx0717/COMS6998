@@ -4,6 +4,7 @@ import logging
 import math
 import os
 import time
+import boto3
 
 import dateutil.parser
 import phonenumbers
@@ -87,11 +88,23 @@ def isvalid_date(date):
         return False
 
 
-def validate_order(phoneNumber, diningDate, diningTime):
-    if phoneNumber is not None and not phonenumbers.is_valid_number(phonenumbers.parse(phoneNumber, "US")):
-        return build_validation_result(False,
-                                       'phoneNumber',
-                                       'Please provide a valid phone number.')
+def validate_order(phoneNumber, diningDate, diningTime, cuisine):
+    cuisine_list = ['chinese', 'japanese', 'american', 'mexican', 'italian']
+    if cuisine is not None:
+        if cuisine.lower() not in cuisine_list:
+            return build_validation_result(False, 'cuisine', 'We only have Chinese, Japanese, American, Mexican,'
+                                                             'Italian. Sorry for the inconvenience caused.')
+    if phoneNumber is not None:
+        try:
+            if not phonenumbers.is_valid_number(phonenumbers.parse(phoneNumber, "US")):
+                return build_validation_result(False,
+                                               'phoneNumber',
+                                               'Please provide a valid phone number.')
+        except:
+            return build_validation_result(False,
+                                           'phoneNumber',
+                                           'Please provide a valid phone number.')
+
 
     if diningDate is not None:
         if not isvalid_date(diningDate):
@@ -142,8 +155,11 @@ def dining_info_process(intent_request):
         # Perform basic validation on the supplied input slots.
         # Use the elicitSlot dialog action to re-prompt for the first violation detected.
         slots = get_slots(intent_request)
+        logger.debug('slots={}'.format(slots))
 
-        validation_result = validate_order(phoneNumber, diningDate, diningTime)
+        validation_result = validate_order(phoneNumber, diningDate, diningTime, cuisine)
+        logger.debug('validation_result={}'.format(validation_result))
+        logger.debug('validation_slots={}'.format(slots))
         if not validation_result['isValid']:
             slots[validation_result['violatedSlot']] = None
             return elicit_slot(intent_request['sessionAttributes'],
@@ -163,6 +179,11 @@ def dining_info_process(intent_request):
     Call for SNS
     """
     if source == "FulfillmentCodeHook":
+        slots = get_slots(intent_request)
+        sqs = boto3.resource('sqs')
+        queue = sqs.Queue(url='https://sqs.us-east-1.amazonaws.com/831292248611/dining_concierge')
+        response = queue.send_message(MessageBody=json.dumps(slots))
+        print(response.get('MessageId'))
         return close(intent_request['sessionAttributes'],
                      'Fulfilled',
                      {'contentType': 'PlainText',
@@ -203,33 +224,35 @@ def lambda_handler(event, context):
     os.environ['TZ'] = 'America/New_York'
     time.tzset()
     logger.debug('event.bot.name={}'.format(event['bot']['name']))
+    logger.debug('event.bot.name={}'.format(event['currentIntent']['slots']))
     return dispatch(event)
 
 
-test = {
-    "messageVersion": "1.0",
-    "invocationSource": "FulfillmentCodeHook",
-    "userId": "John",
-    "sessionAttributes": {},
-    "bot": {
-        "name": "DiningBot",
-        "alias": "$LATEST",
-        "version": "$LATEST"
-    },
-    "outputDialogMode": "Text",
-    "currentIntent": {
-        "name": "DiningSuggestionsIntent",
-        "slots": {
-            "location": "New York",
-            "cuisine": "Chinese",
-            "numberOfPeople": "6",
-            "phoneNumber": "9299907314",
-            "diningDate": "2030-11-08",
-            "diningTime": "11:00"
-        },
-        "confirmationStatus": "None"
-    }
-}
-
-res = lambda_handler(test, {})
-print(json.dumps(res, indent=2))
+# test = {
+#     "messageVersion": "1.0",
+#     "invocationSource": "DialogCodeHook",
+#     "userId": "John",
+#     "sessionAttributes": {},
+#     "bot": {
+#         "name": "DiningBot",
+#         "alias": "$LATEST",
+#         "version": "$LATEST"
+#     },
+#     "outputDialogMode": "Text",
+#     "currentIntent": {
+#         "name": "DiningSuggestionsIntent",
+#         "slots": {
+#             "location": "New York",
+#             "cuisine": "iji",
+#             "numberOfPeople": "6",
+#             "phoneNumber": "+19226678754",
+#             "diningDate": None,
+#             "diningTime": "11:00"
+#         },
+#         "confirmationStatus": "None"
+#     }
+# }
+# #
+# res = lambda_handler(test, {})
+# print(json.dumps(res, indent=2))
+# print(phonenumbers.is_valid_number(phonenumbers.parse("", "US")))
