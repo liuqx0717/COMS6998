@@ -63,6 +63,8 @@ paths:
       responses:
         200:
           description: "Authorized visitor."
+          schema:
+            $ref: "#/definitions/VisitorGreetingInfo"
         403:
           description: "Forbidden."
 
@@ -80,4 +82,12 @@ definitions:
     xml:
       name: "VisitorInfo"
 
-      
+  VisitorGreetingInfo:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name: 
+        type: "string"
+    xml:
+      name: "VisitorGreetingInfo"
