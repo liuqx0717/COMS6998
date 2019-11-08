@@ -1,0 +1,83 @@
+swagger: "2.0"
+info:
+  description: "COMS E6998 hw2"
+  version: "1.0.0"
+  title: "Smart Door"
+host: "api.hw2.liuqx.net"
+basePath: "/v1"
+
+tags:
+- name: "visitor"
+  description: "Update the information of a visitor."
+- name: "authorize"
+  description: "Authorization."
+
+schemes:
+- "https"
+
+paths:
+  /visitors/{id}:
+    put:
+      tags:
+      - "visitor"
+      summary: "C"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: "string"
+        description: "The id of the new visitor. The id must exist on the server."
+      - in: "body"
+        name: "body"
+        description: "The information if the visitor."
+        required: true
+        schema:
+          $ref: "#/definitions/VisitorInfo"
+      responses:
+        200:
+          description: "Successful operation."
+        405:
+          description: "Invalid input"
+        404:
+          description: "The id does not exist."
+          
+  /authorize/{otp}:
+    get:
+      tags:
+      - "authorize"
+      summary: "Authorize an OTP."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: otp
+        required: true
+        type: "string"
+        description: "The OTP to be checked."
+      responses:
+        200:
+          description: "Authorized visitor."
+        403:
+          description: "Forbidden."
+
+definitions:
+  VisitorInfo:
+    type: "object"
+    required:
+    - "name"
+    - "phonenumber"
+    properties:
+      name: 
+        type: "string"
+      phoneNumber:
+        type: "string"
+    xml:
+      name: "VisitorInfo"
+
+      
