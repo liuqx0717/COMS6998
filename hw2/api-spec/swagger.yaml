@@ -40,8 +40,6 @@ paths:
       responses:
         200:
           description: "Successful operation."
-        405:
-          description: "Invalid input"
         404:
           description: "The id does not exist."
           
