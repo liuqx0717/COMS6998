@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     if event["resource"] == "/authorize/{otp}":
       if event["httpMethod"] == "GET":
         otp = event["pathParameters"]["otp"]
-        
+          
         # TODO
         #boto3.setup_default_session(region_name='us-east-1')
         #client = boto3.client('lambda')
@@ -25,7 +25,7 @@ def lambda_handler(event, context):
         #)
         #
         #response_payload = json.loads(response["Payload"].read().decode("utf-8"))
-        
+          
         #print(response_payload)
 
         if otp == "lqx":
@@ -72,5 +72,6 @@ def make_response(code, body):
     "body": json.dumps(body),
     "headers": headers
   }
+
 
 
