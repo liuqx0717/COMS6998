@@ -31,7 +31,7 @@ def lambda_handler(event, context):
         if otp == "lqx":
           return make_response(200, {"name": "liuqx"})
         else:
-          return make_response(403, "Forbidden.")
+          return make_response(403, "Permission denied. ")
 
     elif event["resource"] == "/visitors/{id}":
       if event["httpMethod"] == "PUT":
