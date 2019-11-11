@@ -42,6 +42,9 @@ paths:
           description: "Successful operation."
         404:
           description: "The id does not exist."
+        400:
+          description: "Bad request."
+
           
   /authorize/{otp}:
     get:
@@ -65,6 +68,8 @@ paths:
             $ref: "#/definitions/VisitorGreetingInfo"
         403:
           description: "Forbidden."
+        400:
+          description: "Bad request."
 
 definitions:
   VisitorInfo:

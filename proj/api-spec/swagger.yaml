@@ -1,0 +1,208 @@
+swagger: "2.0"
+info:
+  description: "COMS E6998 project"
+  version: "1.0.0"
+  title: "More for Less - a Promotion App"
+host: "api.6998.liuqx.net"
+basePath: "/v1"
+
+tags:
+- name: "item"
+  description: "The information about a commodity."
+- name: "coupon"
+  description: "Coupons."
+- name: "cart"
+  description: "Shopping carts."
+- name: "user"
+  description: "User profile."
+- name: "saler"
+  description: "Saler profile."
+
+schemes:
+- "https"
+
+paths:
+  /items/{id}:
+    get:
+      tags:
+      - "item"
+      summary: "Get the information of an item."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: "string"
+        description: "The id of the item."
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: "The id does not exist."
+    put:
+      tags:
+      - "item"
+      summary: "Update the information of an item."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: "string"
+        description: "The id of the item."
+      - in: "body"
+        name: "body"
+        description: "The information of the item."
+        required: true
+        schema:
+          $ref: "#/definitions/Item"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: "The id does not exist."
+        400:
+          description: "Bad request."
+          
+  /items:
+    post:
+      tags:
+      - "item"
+      summary: "Create an item."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "The information of the item."
+        required: true
+        schema:
+          $ref: "#/definitions/Item"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: "The id does not exist."
+        400:
+          description: "Bad request."
+          
+  /item-descriptions/{id}:
+    get:
+      tags: 
+      - "item"
+      summary: "Get the description of an item (returns a URL)."
+      consumes:
+      - "application/json"
+      produces:
+      - "text/plain"
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: "string"
+        description: "The id of the item."
+      responses:
+        200:
+          description: "Successful operation. Return a URL of the description website."
+          schema:
+            type: string
+        404:
+          description: "The id does not exist."
+    put:
+      tags:
+      - "item"
+      summary: "Update the description of an item by uploading a zip file containing a webpage."
+      consumes:
+      - "application/zip"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: "string"
+        description: "The id of the item."
+      - in: "body"
+        name: "body"
+        description: "The information of the item."
+        required: true
+        schema:
+          type: file
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: "The id does not exist."
+        400:
+          description: "Bad request."
+          
+  
+
+definitions:
+  Item:
+    type: "object"
+    required: 
+    - "title"
+    - "picture"
+    - "price"
+    - "stock"
+    properties:
+      id:
+        type: "string"
+      salerId:
+        type: "string"
+      title:
+        type: "string"
+      picture:
+        type: "string"  # file name (a.jpg)
+      price:
+        type: "number"
+      stock:
+        type: "integer"
+
+  
+  UserProfile:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+
+  
+  VisitorInfo:
+    type: "object"
+    required:
+    - "name"
+    - "phonenumber"
+    properties:
+      name: 
+        type: "string"
+      phoneNumber:
+        type: "string"
+    xml:
+      name: "VisitorInfo"
+
+  VisitorGreetingInfo:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name: 
+        type: "string"
+    xml:
+      name: "VisitorGreetingInfo"

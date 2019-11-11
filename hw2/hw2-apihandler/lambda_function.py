@@ -42,7 +42,7 @@ def lambda_handler(event, context):
           name = body["name"]
           phoneNumber = body["phoneNumber"]
         except:
-          return make_response(405, "Invalid input: " + bodyJson)
+          return make_response(400, "Invalid input: " + bodyJson)
         # TODO
 
         if id == "lqx":
