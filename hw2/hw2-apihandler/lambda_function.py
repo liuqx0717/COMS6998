@@ -17,19 +17,19 @@ def lambda_handler(event, context):
         otp = event["pathParameters"]["otp"]
           
         # TODO
-        #boto3.setup_default_session(region_name='us-east-1')
-        #client = boto3.client('lambda')
-        #response = client.invoke(
-        #  FunctionName='arn:aws:lambda:us-east-1:530060456874:function:LF0',
-        #  Payload=json.dumps({'query':msg, 'userId': id}).encode("utf-8")
-        #)
-        #
-        #response_payload = json.loads(response["Payload"].read().decode("utf-8"))
-          
+        boto3.setup_default_session(region_name='us-east-1')
+        client = boto3.client('lambda')
+        response = client.invoke(
+          FunctionName='arn:aws:lambda:us-east-1:831292248611:function:smart_door_fe_lf',
+          Payload=json.dumps({'action':'authorize', 'otp':otp}).encode("utf-8")
+        )
+        
+        response_payload = json.loads(response["Payload"].read().decode("utf-8"))
+        
         #print(response_payload)
 
-        if otp == "lqx":
-          return make_response(200, {"name": "liuqx"})
+        if response_payload["authorized"] == True:
+          return make_response(200, {"name": response_payload["name"]})
         else:
           return make_response(403, "Permission denied. ")
 
@@ -42,13 +42,24 @@ def lambda_handler(event, context):
           name = body["name"]
           phoneNumber = body["phoneNumber"]
         except:
-          return make_response(400, "Invalid input: " + bodyJson)
+          return make_response(405, "Invalid input: " + bodyJson)
+          
         # TODO
-
-        if id == "lqx":
+        boto3.setup_default_session(region_name='us-east-1')
+        client = boto3.client('lambda')
+        response = client.invoke(
+          FunctionName='arn:aws:lambda:us-east-1:831292248611:function:smart_door_fe_lf',
+          Payload=json.dumps({'action':'add', 'id':id, 'name':name, 'phoneNumber':phoneNumber}).encode("utf-8")
+        )
+        
+        response_payload = json.loads(response["Payload"].read().decode("utf-8"))
+        
+        #print(response_payload)
+        
+        if response_payload["status"]:
           return make_response(200, "OK: " + name + ", " + phoneNumber + ".")
         else:
-          return make_response(404, "The id does not exist.")
+          return make_response(404, response_payload["message"])
         
 
 
