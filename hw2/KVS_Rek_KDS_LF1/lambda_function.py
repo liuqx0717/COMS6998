@@ -3,7 +3,14 @@ import numpy as np
 import base64
 import random
 import boto3
-import cv2
+
+# TODO: uncomment
+# import cv2
+
+# dynamo credentials
+ACCESS_KEY = 'AKIAZ7JA4ZXTGCUSJ5NO'
+SECRET_KEY = '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'
+REGION = 'us-east-1'
 
 
 def lambda_handler(event, context):
@@ -86,9 +93,68 @@ def lambda_handler(event, context):
                         if == "" means I get a empty frame. Just skip it
     """
 
+    if faceID:
+        item = searchFace(faceID)
+        if (item):
+            otp(faceID, phone=item["phoneNumber"])
+            appendPhoto(faceID, img_address)
 
     # TODO implement
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
     }
+
+
+# check whether faceID is in 'visitors' table
+def searchFace(faceID):
+    global ACCESS_KEY
+    global SECRET_KEY
+    global REGION
+    client = boto3.client('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY,
+                          region_name=REGION)
+    response = client.get_item(
+        Key={
+            "faceId": {
+                "S": faceID
+            }
+        },
+        ReturnConsumedCapacity='TOTAL',
+        TableName='visitors'
+    )
+    try:
+        if (response["Item"]):
+            # print(response)
+            # {
+            # 'Item': {'faceId': {'S': '1'}},
+            # 'ConsumedCapacity': {'TableName': 'visitors', 'CapacityUnits': 0.5},
+            # 'ResponseMetadata': {'RequestId': 'DJKMDTTIQVKF10UIKR1LMA20OFVV4KQNSO5AEMVJF66Q9ASUAAJG',
+            # 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'Server', 'date': 'Fri, 15 Nov 2019 20:30:13 GMT',
+            # 'content-type': 'application/x-amz-json-1.0', 'content-length': '93', 'connection': 'keep-alive',
+            # 'x-amzn-requestid': 'DJKMDTTIQVKF10UIKR1LMA20OFVV4KQNSO5AEMVJF66Q9ASUAAJG', 'x-amz-crc32':
+            # '2192037580'}, 'RetryAttempts': 0}}
+            return response["Item"]
+    except:
+        return False
+
+
+# generate and store otp with faceID; send otp
+def otp(faceID, phone):
+    OTP = str(random.randint(100000, 999999))
+
+    sendOTP(OTP, phone)
+
+
+# append a new photo to the photo array if the faceID already exists
+def appendPhoto(faceID, img_address):
+    # timestamp
+    pass
+
+
+def sendOTP(OTP, phone):
+    # TODO:
+    #  send otp via SMS
+    pass
+
+
+searchFace("1")
