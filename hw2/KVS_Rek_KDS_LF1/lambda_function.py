@@ -3,15 +3,7 @@ import numpy as np
 import base64
 import random
 import boto3
-import datetime
-
-# TODO: uncomment
-# import cv2
-
-# dynamo credentials
-ACCESS_KEY = 'AKIAZ7JA4ZXTGCUSJ5NO'
-SECRET_KEY = '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'
-REGION = 'us-east-1'
+import cv2
 
 
 def lambda_handler(event, context):
@@ -92,115 +84,18 @@ def lambda_handler(event, context):
                         if == "" means I get a empty frame. Just skip it
         faceID          Like    ab4fc56d-e7c0-4502-907c-69a0435dc5c3
                         if == "" means I get a empty frame. Just skip it
+    ONLY if img_address != NULL and faceID != NULL can we do following operation.
     """
+    # send img_address and faceID for following process
+    if img_address != "" and faceID != "":
+        lambda_client = boto3.client("lambda")
+        lambda_response = lambda_client.invoke(
+            FunctionName='arn:aws:lambda:us-east-1:831292248611:function:smart_door_kds_lf',
+            Payload=json.dumps({"img_address": img_address, "faceID": faceID})
+        )
+        print(lambda_response)
 
-    if faceID:
-        item = searchFace(faceID)
-        if (item):
-            otp(faceID, phone=item["phoneNumber"])
-            appendPhoto(faceID, img_address)
-
-
-    return {
+    return{
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
     }
-
-
-# check whether faceID is in 'visitors' table
-def searchFace(faceID):
-    global ACCESS_KEY
-    global SECRET_KEY
-    global REGION
-    client = boto3.client('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY,
-                          region_name=REGION)
-    response = client.get_item(
-        Key={
-            "faceId": {
-                "S": faceID
-            }
-        },
-        ReturnConsumedCapacity='TOTAL',
-        TableName='visitors'
-    )
-    try:
-        if (response["Item"]):
-            # print(response)
-            # {
-            # 'Item': {'faceId': {'S': '1'}},
-            # 'ConsumedCapacity': {'TableName': 'visitors', 'CapacityUnits': 0.5},
-            # 'ResponseMetadata': {'RequestId': 'DJKMDTTIQVKF10UIKR1LMA20OFVV4KQNSO5AEMVJF66Q9ASUAAJG',
-            # 'HTTPStatusCode': 200, 'HTTPHeaders': {'server': 'Server', 'date': 'Fri, 15 Nov 2019 20:30:13 GMT',
-            # 'content-type': 'application/x-amz-json-1.0', 'content-length': '93', 'connection': 'keep-alive',
-            # 'x-amzn-requestid': 'DJKMDTTIQVKF10UIKR1LMA20OFVV4KQNSO5AEMVJF66Q9ASUAAJG', 'x-amz-crc32':
-            # '2192037580'}, 'RetryAttempts': 0}}
-            return response["Item"]
-    except:
-        return False
-
-
-# generate and store otp with faceID; send otp
-def otp(faceID, phone):
-    global ACCESS_KEY
-    global SECRET_KEY
-    global REGION
-    client = boto3.client('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY,
-                          region_name=REGION)
-    OTP = str(random.randint(100000, 999999))
-    TTL = str(int(datetime.datetime.now().timestamp())+300)
-    # print(TTL)
-    # print(type(TTL))
-    item = {
-        "otp": {
-            "S": OTP
-        },
-        "faceId": {
-            "S": faceID
-        },
-        "ttl": {
-            "N": TTL
-        }
-    }
-    response = client.put_item(
-        Item=item,
-        ReturnConsumedCapacity='TOTAL',
-        TableName='passcodes',
-    )
-    sendOTP(OTP, phone)
-
-
-# append a new photo to the photo array if the faceID already exists
-def appendPhoto(faceID, img_address):
-    global ACCESS_KEY
-    global SECRET_KEY
-    global REGION
-    client = boto3.client('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY,
-                          region_name=REGION)
-    timestamp = str(int(datetime.datetime.now().timestamp()))
-    response = client.update_item(
-        Key={
-            "faceId": {
-                "S": faceID
-            }
-        },
-        ExpressionAttributeNames={
-            "#C": "photos"
-        },
-        ExpressionAttributeValues={
-            ':c': {
-                'S': address["zipcode"],
-            }
-        },
-        ReturnValues='ALL_NEW',
-        TableName='visitors',
-        UpdateExpression='SET #C = :c',
-    )
-
-
-def sendOTP(OTP, phone):
-    # TODO: send otp via SMS
-    pass
-
-
-# searchFace("1")
-# otp("1","4564")
