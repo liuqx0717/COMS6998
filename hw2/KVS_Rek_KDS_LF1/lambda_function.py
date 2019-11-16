@@ -3,6 +3,7 @@ import numpy as np
 import base64
 import random
 import boto3
+import datetime
 
 # TODO: uncomment
 # import cv2
@@ -99,7 +100,7 @@ def lambda_handler(event, context):
             otp(faceID, phone=item["phoneNumber"])
             appendPhoto(faceID, img_address)
 
-    # TODO implement
+
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
@@ -140,21 +141,66 @@ def searchFace(faceID):
 
 # generate and store otp with faceID; send otp
 def otp(faceID, phone):
+    global ACCESS_KEY
+    global SECRET_KEY
+    global REGION
+    client = boto3.client('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY,
+                          region_name=REGION)
     OTP = str(random.randint(100000, 999999))
-
+    TTL = str(int(datetime.datetime.now().timestamp())+300)
+    # print(TTL)
+    # print(type(TTL))
+    item = {
+        "otp": {
+            "S": OTP
+        },
+        "faceId": {
+            "S": faceID
+        },
+        "ttl": {
+            "N": TTL
+        }
+    }
+    response = client.put_item(
+        Item=item,
+        ReturnConsumedCapacity='TOTAL',
+        TableName='passcodes',
+    )
     sendOTP(OTP, phone)
 
 
 # append a new photo to the photo array if the faceID already exists
 def appendPhoto(faceID, img_address):
-    # timestamp
-    pass
+    global ACCESS_KEY
+    global SECRET_KEY
+    global REGION
+    client = boto3.client('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY,
+                          region_name=REGION)
+    timestamp = str(int(datetime.datetime.now().timestamp()))
+    response = client.update_item(
+        Key={
+            "faceId": {
+                "S": faceID
+            }
+        },
+        ExpressionAttributeNames={
+            "#C": "photos"
+        },
+        ExpressionAttributeValues={
+            ':c': {
+                'S': address["zipcode"],
+            }
+        },
+        ReturnValues='ALL_NEW',
+        TableName='visitors',
+        UpdateExpression='SET #C = :c',
+    )
 
 
 def sendOTP(OTP, phone):
-    # TODO:
-    #  send otp via SMS
+    # TODO: send otp via SMS
     pass
 
 
-searchFace("1")
+# searchFace("1")
+# otp("1","4564")
