@@ -37,25 +37,10 @@ function submitForm(e) {
     dataType: "json",
     success: function(response){
       loadPhoto(response);
-      showAlert("alert-success", "Uploaded successfully.");
     },
     error: function(xhr, status, error){
       errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
-      showAlert("alert-danger", errMsg);
+      alert("errMsg");
     }
   });
-}
-
-// type: the alert type of bootstrap.
-function showAlert(type, msg) {
-  $("#formAlert").remove();
-
-  date = new Date();
-  time = date.toLocaleTimeString();
-  newElement = 
-    "<div id='formAlert' class='alert top-1 " + type + "' role='alert'>" +
-    time + "<br>" + msg +
-    "</div>";
-  $("#alertCol").append(newElement);
-
 }
