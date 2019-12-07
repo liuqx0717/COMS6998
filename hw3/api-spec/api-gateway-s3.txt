@@ -1,0 +1,29 @@
+IAM api gateway role，+s3fullaccess
+to enable logging: IAM api gateway role, (outer)settings: CloudWatch log role ARN, 
+    stage: enable logging.
+
+添加api key  (header: X-API-Key)
+
+添加/upload，下面添加/{item}，下面添加PUT:
+    AWS Service, Region, Service, HTTP method, path override, {bucket}/{object}, role
+
+method request:
+    Authorization AWS_IAM, API Key Required
+
+integration request:
+    path parameters: object->method.request.path.item, bucket->'test-hw3'
+
+method request:
+    Add the Content-Type (for upload) and/or Accept (for download) header to require the client to
+    specify the required binary media type and map them to the integration request. 
+
+    Content-Type->method.request.header.Content-Type
+
+(inner)settings:
+    binary media types: image/png, image/jpg, image/jpeg
+
+method response:
+    200
+
+test:
+curl -X PUT -T xxx.png -H "X-API-Key: xxxxx" -H "Content-Type: image/png" https://api.hw3.liuqx.net/v1/upload/test.png
