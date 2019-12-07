@@ -2,7 +2,8 @@ IAM api gateway role，+s3fullaccess
 to enable logging: IAM api gateway role, (outer)settings: CloudWatch log role ARN, 
     stage: enable logging.
 
-添加api key  (header: X-API-Key)
+添加api key  (header: X-API-Key) 
+添加usage plan（stage和key都要绑定）
 
 添加/upload，下面添加/{item}，下面添加PUT:
     AWS Service, Region, Service, HTTP method, path override, {bucket}/{object}, role
