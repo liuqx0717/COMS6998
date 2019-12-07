@@ -5,7 +5,7 @@ function uuid4() {
       return v.toString(16);
     });
   }
-let JobName = uuid()
+let JobName = uuid4()
 
 let transcribeservice = new AWS.TranscribeService();
 
