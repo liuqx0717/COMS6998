@@ -1,6 +1,8 @@
 var baseUrl = "https://api.hw3.liuqx.net/v1/";
 var api_upload = baseUrl + "upload/";
 
+var tmpurl = "https://p4pv3uijkk.execute-api.us-east-1.amazonaws.com/Test";
+
 
 function loadPhoto(json_str) {
   var results = json_str["results"];
@@ -24,7 +26,7 @@ function submitForm(e) {
 
   $.ajax({
     type: "GET",
-    url: "https://p4pv3uijkk.execute-api.us-east-1.amazonaws.com/Test",
+    url: tmpurl,
     crossDomain: true,
     data: data,
     dataType: "json",
