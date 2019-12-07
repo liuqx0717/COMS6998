@@ -42,7 +42,7 @@ def lambda_handler(event, context):
         verify_certs=True,
         connection_class=RequestsHttpConnection
     )
-    # print("\nes_info = ", es.info())
+    print("\nes_info = ", es.info())
 
     # index
     document = {
@@ -51,14 +51,22 @@ def lambda_handler(event, context):
         "createdTimestamp": str(datetime.datetime.now()),
         "labels": label_list
     }
-    print("document = ", json.dumps(document, indent=2))
+    print("\ndocument = ", json.dumps(document, indent=2))
     es.index(index="photos", doc_type="_doc", id=uuid.uuid4(), body=document)
 
-    # res = es.search(index="photos", q="dog")
-    # print("\nres = ", res, "\n")
+    # res = es.search(index="photos", q="plant")
+    # res = es.search(index="photos", q="labels:plant")
+
+    # query_body = {
+    #     "query" : {
+    #         "match" : { "labels" : "plant drink" }
+    #     }
+    # }
+    # res = es.search(index="photos", body=query_body)
+
+    # print("\nres = ", json.dumps(res, indent=2), "\n")
 
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
     }
-
