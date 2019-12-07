@@ -27,4 +27,8 @@ method response:
     200
 
 test:
-curl -X PUT -T xxx.png -H "X-API-Key: xxxxx" -H "Content-Type: image/png" https://api.hw3.liuqx.net/v1/upload/test.png
+curl -X PUT -T xxx.png -H "X-API-Key: FasEh7WYoP3dilu2oRF0L9YlfDHz4NPrpdVej1y6" -H "Content-Type: image/png" https://api.hw3.liuqx.net/v1/upload/test.png
+
+curl -X PUT -T /home/liuqx/Pictures/Screenshot\ from\ 2019-11-30\ 21-34-59.png -H "X-API-Key: FasEh7WYoP3dilu2oRF0L9YlfDHz4NPrpdVej1y6" -H "Content-Type: image/png" https://api.hw3.liuqx.net/v1/upload/test.png
+
+curl -H "Content-Type: application/json" https://api.hw3.liuqx.net/v1/search
