@@ -22,6 +22,18 @@
 
   <body>
     <br>
+    <br>
+    <div class="row justify-content-center top-1">
+        <div class="col-sm-10 col-md-8 col-lg-6">
+          <form onsubmit="upload(event);">
+            <div class="form-group">
+              <input id="images" type="file" class="form-control" name="images" multiple>
+            </div>
+            <button id="submitBtn" type="submit" class="btn btn-primary float-right">Upload</button>
+          </form>
+        </div>
+    </div>
+    <br><br>
     <div class="row justify-content-center top-1">
         <div class="col-sm-10 col-md-8 col-lg-6">
           <form onsubmit="submitForm(event);">
