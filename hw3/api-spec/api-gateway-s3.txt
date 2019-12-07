@@ -9,12 +9,12 @@ to enable logging: IAM api gateway role, (outer)settings: CloudWatch log role AR
     AWS Service, Region, Service, HTTP method, path override, {bucket}/{object}, role
 
 method request:
-    Authorization AWS_IAM, API Key Required
+    Authorization None, API Key Required
+    Add header: Content-Type
 
 integration request:
     path parameters: object->method.request.path.item, bucket->'test-hw3'
 
-method request:
     Add the Content-Type (for upload) and/or Accept (for download) header to require the client to
     specify the required binary media type and map them to the integration request. 
 
