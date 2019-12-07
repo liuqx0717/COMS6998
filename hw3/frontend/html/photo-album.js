@@ -1,26 +1,18 @@
-var baseUrl = "https://api.hw2.liuqx.net/v1/";
+var baseUrl = "https://api.hw3.liuqx.net/v1/";
 var api_visitors = baseUrl + "visitors";
 
 
-
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split('&');
-  for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) == variable) {
-          return decodeURIComponent(pair[1]);
-      }
-  }
-  console.log('Query variable %s not found', variable);
-}
-
-function loadPhoto() {
-  var photoSrc = getQueryVariable("photo");
-  if(photoSrc != null){
-    var newElement = 
-      "<img class='img-fluid w-100' src='" + photoSrc + "' alt='Failed to open image: " + photoSrc + "'>" 
-    $("#imageCol").prepend(newElement);
+function loadPhoto(json_str) {
+  var results = json_str["results"];
+  for (var i = 0; i < results.length; i++){
+    var obj = results[i];
+    var photoSrc = obj["url"];
+    var labels = obj["labels"];
+    if(photoSrc != null){
+      var newElement = 
+        "<img class='img-fluid w-100' src='" + photoSrc + "' alt='Failed to open image: " + photoSrc + "'>" 
+      $("#imageCol").prepend(newElement);
+    }
   }
 }
 
@@ -33,23 +25,18 @@ function loadId() {
 
 function submitForm(e) {
   e.preventDefault();
-
-  var id = $("#idInputBox").val();
-  var name = $("#nameInputBox").val();
-  var phone = $("#phoneInputBox").val();
-
-  var data = JSON.stringify({
-    name: name,
-    phoneNumber: phone
-  });
+  $("#imageCol").empty();
+  var labels = $("#labelBox").val();
+  var data = {"q": labels};
 
   $.ajax({
-    type: "PUT",
-    url: api_visitors + "/" + encodeURIComponent(id),
+    type: "GET",
+    url: "https://p4pv3uijkk.execute-api.us-east-1.amazonaws.com/Test",
     crossDomain: true,
     data: data,
     dataType: "json",
     success: function(response){
+      loadPhoto(response);
       showAlert("alert-success", "Uploaded successfully.");
     },
     error: function(xhr, status, error){
