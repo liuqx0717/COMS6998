@@ -66,6 +66,8 @@ recognition.onerror = function(event) {
       App buttons and input 
 ------------------------------*/
 
+// The $().on() method below is a new method as of jQuery version 1.7.
+
 $('#start-record-btn').on('click', function(e) {
   if (noteContent.length) {
     noteContent += ' ';
@@ -74,6 +76,15 @@ $('#start-record-btn').on('click', function(e) {
   recognition.start();
 });
 
+// This is another way.
+// document.getElementById("start-record-btn").onclick = function(){startRecord()};
+// function startRecord(){
+//     if (noteContent.length) {
+//       noteContent += ' ';
+//     }
+//     console.log("Staring recog service...")
+//     recognition.start();
+// }
 
 $('#pause-record-btn').on('click', function(e) {
   recognition.stop();
