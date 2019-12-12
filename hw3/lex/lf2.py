@@ -19,7 +19,7 @@ def search(keywords):
         connection_class=RequestsHttpConnection
     )
 
-    # TODO: input format of lables. 'keywords' is a list of keywords
+    # TODO: input format of labels. 'keywords' is a list of keywords
     query_body = {
         "query": {
             "match": {"labels": str(keywords)}
@@ -46,7 +46,7 @@ def lambda_handler(event, context):
             'result': ''
         }
 
-    keywords = response_payload['keywords'] # type list
+    keywords = response_payload['keywords']  # type list
     res = search(keywords)
 
     return {
