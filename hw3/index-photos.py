@@ -28,7 +28,7 @@ def lambda_handler(event, context):
     label_list = detect_labels(photo, bucket)
     print("Labels detected: ", str(label_list))
 
-    # es config
+    # ES config.
     host = 'vpc-photos-rxqmfbkp3mzqjkteqaecvpkmtm.us-east-1.es.amazonaws.com'
     region = 'us-east-1'
     service = 'es'
@@ -44,7 +44,7 @@ def lambda_handler(event, context):
     )
     print("\nes_info = ", es.info())
 
-    # index
+    # index photo
     document = {
         "objectKey": photo,
         "bucket": bucket,
@@ -53,6 +53,8 @@ def lambda_handler(event, context):
     }
     print("\ndocument = ", json.dumps(document, indent=2))
     es.index(index="photos", doc_type="_doc", id=uuid.uuid4(), body=document)
+
+    # Below are some examples of search by keywords.
 
     # res = es.search(index="photos", q="plant")
     # res = es.search(index="photos", q="labels:plant")

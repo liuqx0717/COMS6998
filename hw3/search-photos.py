@@ -30,7 +30,7 @@ def lambda_handler(event, context):
                     "headers": headers
                 }
                 # print(response_payload)
-                return make_response(200, {"name": response_payload["name"]})
+                # return make_response(200, {"name": response_payload["name"]})
 
         # if resource/method not listed above
         return make_response(400, "Bad request.")
