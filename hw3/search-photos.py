@@ -22,6 +22,29 @@ def make_response(code, body):
     }
 
 
+def lex(message):
+    lf = boto3.client('lambda')
+    response = lf.invoke(
+        FunctionName='arn:aws:lambda:us-east-1:831292248611:function:photo_album_lex_lf',
+        Payload=json.dumps({'message': message}).encode("utf-8")
+    )
+    response_payload = json.loads(response["Payload"].read().decode("utf-8"))
+
+    if response_payload['status'] is False:
+        return {
+            'status': False,
+            'result': ''
+        }
+
+    keywords = response_payload['keywords']  # type list
+    res = search(keywords)
+
+    return {
+        'status': True,
+        'result': res
+    }
+
+
 def search(keywords):
     host = 'vpc-photos-rxqmfbkp3mzqjkteqaecvpkmtm.us-east-1.es.amazonaws.com'
     region = 'us-east-1'
@@ -58,6 +81,12 @@ def lambda_handler(event, context):
     try:
         if event["resource"] == "/search":
             if event["httpMethod"] == "GET":
+                query = event['queryStringParameters']['q']
+                lex_res = lex(query)
+                print(lex_res)
+                if not lex_res['status']:
+                    return make_response(200, "Lex doesn't understand your words.")
+
 
                 # This is a test return.
                 return {
