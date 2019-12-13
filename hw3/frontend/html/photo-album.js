@@ -2,7 +2,7 @@ const baseUrl = "https://api.hw3.liuqx.net/v1/";
 const api_upload = baseUrl + "upload/";
 
 // const tmpurl = "https://p4pv3uijkk.execute-api.us-east-1.amazonaws.com/Test";
-const tmpurl = "https://ha5vfpjbhf.execute-api.us-east-1.amazonaws.com/v1";
+const tmpurl = "https://ha5vfpjbhf.execute-api.us-east-1.amazonaws.com/v1/search";
 
 
 function loadPhoto(json_str) {

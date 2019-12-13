@@ -66,7 +66,7 @@ def lambda_handler(event, context):
                             '"labels","labels"]}, {"url":"https://face-detect-6998.s3.amazonaws.com/73596321.jpg",'
                             '"labels":["labels","labels"]}, '
                             '{"url":"https://face-detect-6998.s3.amazonaws.com/99778582.jpg","labels":["labels",'
-                            '"labels"]} ]})',
+                            '"labels"]} ]}',
                     "headers": headers
                 }
 
