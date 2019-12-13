@@ -55,7 +55,8 @@ function upload(e) {
      type: 'PUT',
      data: image,
      dataType: 'html',
-     headers: {"X-API-Key": "CXsDgIB38w3Ny950vlAzR9IOAkHEuEXr7IjW0Phf"},
+    //  headers: {"X-API-Key": "CXsDgIB38w3Ny950vlAzR9IOAkHEuEXr7IjW0Phf"},
+     headers: {"X-API-Key": "FasEh7WYoP3dilu2oRF0L9YlfDHz4NPrpdVej1y6"},
      processData: false,
      contentType: extension,
      success: function (response) {
