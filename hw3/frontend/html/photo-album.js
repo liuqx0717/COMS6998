@@ -65,7 +65,7 @@ function upload(e) {
      error: function(xhr, status, error){
       errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
       alert("errMsg");
-      }
+     }
   });
 }
 
