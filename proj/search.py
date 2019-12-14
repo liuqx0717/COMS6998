@@ -33,6 +33,11 @@ def search(q):
     query_body = {
         "query": {
             "bool": {
+                "must": {
+                    "match": {
+                        "available": 1
+                    }
+                },
                 "should": [
                     {"match": {"title": ""}},
                     {"match": {"description": ""}},
