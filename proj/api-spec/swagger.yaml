@@ -175,6 +175,8 @@ paths:
           description: "Successful operation."
           schema:
             $ref: "#/definitions/UserProfile"
+        204:
+          description: "New user, register type first, paypalUrl required if is seller."
 
     put:
       tags:
@@ -197,9 +199,18 @@ paths:
 
   /orders: # finished orders
     get:
+      tags:
+      - "order history"
+      summary: "Get finished order history"
+      parameters:
       response:
-        type: "OrderArray"
-    
+        200:
+          description: "Successful operation."
+          schema:
+            "array"
+            itmes:
+              $ref: "#/definitions/Order"
+
   
   /cart: # wishlist orders
     get:
@@ -326,7 +337,7 @@ definitions:
       paypalUrl:
         type: "string" # url
 
-        
+
   Search:
     type: "object"
     properties:
