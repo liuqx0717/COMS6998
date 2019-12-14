@@ -22,6 +22,45 @@ schemes:
 - "https"
 
 paths:
+  /recommendation/random:
+    get:
+      tags:
+      - "recommendation"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/Item"
+
+  /recommendation/location:
+    get:
+      tags:
+      - "recommendation"
+      parameters:
+        - in: query
+          name: "lat"
+          type: "number"
+        - in: query
+          name: "lon"
+          type: "number"
+
+  /recommendation/history:
+    get:
+      tags:
+      - "recommendation"
+
+  /search
+    get:
+      tags:
+      - "search"
+      parameters:
+      - in: query
+        name: "s"
+        type: "Search"
+
+
+      
+
   /items/{id}:
     get:
       tags:
@@ -67,12 +106,35 @@ paths:
       responses:
         200:
           description: "Successful operation."
-          schema:
-            $ref: "#/definitions/Item"
         404:
           description: "The id does not exist."
         400:
           description: "Bad request."
+          
+  /pictures:
+    post:
+      parameters:
+        - in: body
+          name: "body"
+          required: true
+          type: "file"
+          description: "The image of the item."
+        responses:
+          200:
+            description: "Successful operation."
+            type: "string" # url
+    
+    delete:
+      parameters:
+        - in: query
+          name: "url"
+          required: true
+          type: "string"
+          description: "The url of the image"
+        responses:
+          200:
+            description: "Successful operation."
+
           
   /items:
     post:
@@ -93,65 +155,95 @@ paths:
       responses:
         200:
           description: "Successful operation."
-          schema:
-            $ref: "#/definitions/Item"
-        404:
-          description: "The id does not exist."
+          type: "string"    # id
         400:
           description: "Bad request."
           
-  /item-descriptions/{id}:
+
+  /myhome:
     get:
-      tags: 
-      - "item"
-      summary: "Get the description of an item (returns a URL)."
+      tags:
+      - "user"
+      summary: "Get the information of an user."
       consumes:
       - "application/json"
       produces:
-      - "text/plain"
+      - "application/json"
       parameters:
-      - in: path
-        name: id
-        required: true
-        type: "string"
-        description: "The id of the item."
       responses:
         200:
-          description: "Successful operation. Return a URL of the description website."
+          description: "Successful operation."
           schema:
-            type: string
-        404:
-          description: "The id does not exist."
+            $ref: "#/definitions/UserProfile"
+
     put:
       tags:
-      - "item"
-      summary: "Update the description of an item by uploading a zip file containing a webpage."
+      - "user"
+      summary: "Get the information of an user."
       consumes:
-      - "application/zip"
+      - "application/json"
       produces:
       - "application/json"
       parameters:
-      - in: path
-        name: id
-        required: true
-        type: "string"
-        description: "The id of the item."
       - in: "body"
         name: "body"
         description: "The information of the item."
         required: true
         schema:
-          type: file
+          $ref: "#/definitions/UserProfile"
       responses:
         200:
           description: "Successful operation."
-          schema:
-            $ref: "#/definitions/Item"
-        404:
-          description: "The id does not exist."
-        400:
-          description: "Bad request."
+
+  /orders: # finished orders
+    get:
+      response:
+        type: "OrderArray"
+    
+  
+  /cart: # wishlist orders
+    get:
+      tags:
+      - "cart"
+      response:
+        200:
+          description: "Successful operation"
+          type: "OrderArray"
+    
+    put:
+      - in: query
+        name: "item"
+        required: true
+        type: "string"
+        description: "The url of the image"
+      responses:
+        200:
+          description: "Successful operation."
           
+    post:
+      - in: query
+        name: "order"
+        required: true
+        type: "string"
+        description: "Finalize order"
+      response:
+        200:
+          type: "string" # paypalUrl
+          description: "Paypal url of seller"
+          
+    delete:
+      - in: query
+        name: "items"
+        required: true
+        type: "array"
+          items:
+            type: "string"
+        description: "Remove items from cart"
+      response:
+        200:
+          
+        400:
+          desc
   
 
 definitions:
@@ -165,44 +257,116 @@ definitions:
     properties:
       id:
         type: "string"
-      salerId:
+      available:
+        type: "integer"
+      sellerId:
         type: "string"
       title:
         type: "string"
-      picture:
-        type: "string"  # file name (a.jpg)
+      description:
+        type: "string"
+      imageUrl:
+        type: "array"  # file name (a.jpg)
+        items:
+          type: "string"
+      category:
+        type: "array"  # user defined keywords
+        items:
+          type: "string"
+      tag:
+        type: "array" # rekognition
+        items:
+          type: "string"
       price:
+        type: "number"
+      prvPrice:
         type: "number"
       stock:
         type: "integer"
 
+  Order:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      items:
+        type: "array"
+        items:
+          type: "string"
+      seller:
+        type: "string"
+      buyer:
+        type: "string"
+      price:
+        type: "number"
+      prvPrice:
+        type: "number"
+      finishTime:
+        type: "number" # float
+      status:
+        type: "string" # finished, wishlist
+       
   
   UserProfile:
     type: "object"
     properties:
-      name:
+      id:
         type: "string"
+      userName:
+        type: "string"
+      address:
+        type: "Address"
+      phone:
+        type: "string"
+      email:
+        type: "string"
+      paypalUrl:
+        type: "string" # url
+        
 
+  Address:
+    type: "object"
+    properties:
+      street:
+        type: "string"
+      city:
+        type: "string"
+      state:
+        type: "string"
+      postcode:
+        type: "integer"
+        
+  Search:
+    type: "object"
+    properties:
+      keyWord:
+        type: "string"
+      priceMin:
+        type: "number"
+      priceMax:
+        type: "number"
+      distance:
+        type: "number"
   
-  VisitorInfo:
-    type: "object"
-    required:
-    - "name"
-    - "phonenumber"
-    properties:
-      name: 
-        type: "string"
-      phoneNumber:
-        type: "string"
-    xml:
-      name: "VisitorInfo"
+  # VisitorInfo:
+  #   type: "object"
+  #   required:
+  #   - "name"
+  #   - "phonenumber"
+  #   properties:
+  #     name: 
+  #       type: "string"
+  #     phoneNumber:
+  #       type: "string"
+  #   xml:
+  #     name: "VisitorInfo"
 
-  VisitorGreetingInfo:
-    type: "object"
-    required:
-    - "name"
-    properties:
-      name: 
-        type: "string"
-    xml:
-      name: "VisitorGreetingInfo"
+  # VisitorGreetingInfo:
+  #   type: "object"
+  #   required:
+  #   - "name"
+  #   properties:
+  #     name: 
+  #       type: "string"
+  #   xml:
+  #     name: "VisitorGreetingInfo"
