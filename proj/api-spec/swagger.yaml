@@ -318,26 +318,14 @@ definitions:
       userName:
         type: "string"
       address:
-        type: "Address"
+        type: "string"
       phone:
         type: "string"
       email:
         type: "string"
       paypalUrl:
         type: "string" # url
-        
 
-  Address:
-    type: "object"
-    properties:
-      street:
-        type: "string"
-      city:
-        type: "string"
-      state:
-        type: "string"
-      postcode:
-        type: "integer"
         
   Search:
     type: "object"
