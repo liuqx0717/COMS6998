@@ -283,16 +283,6 @@ definitions:
         type: "number"
       stock:
         type: "integer"
-      location:
-        type: "location"
-
-  location:
-    type: "object"
-    properties:
-      lat:
-        type: "number"
-      lon:
-        type: "number"
 
 
   Order:
