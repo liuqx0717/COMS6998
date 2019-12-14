@@ -313,6 +313,8 @@ definitions:
     properties:
       id:
         type: "string"
+      type:
+        type: "string" # seller or buyer
       userName:
         type: "string"
       address:
