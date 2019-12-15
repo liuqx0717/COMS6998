@@ -1,13 +1,12 @@
 import json
 import requests
 
-CLIENT_ID = '2a2sr0e7ktos7b3l1r13tlq0g8'
 HEADERS = {
     "access-control-allow-origin": "*",
     "access-control-allow-headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,Access-Token",
     "access-control-allow-methods": "GET"
 }
-ES_ENDPOINT = "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_search"
+ES_SEARCH_ENDPOINT = "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_search"
 
 
 def lambda_handler(event, context):
@@ -44,7 +43,7 @@ def lambda_handler(event, context):
                     "Content-Type": "application/json"
                 }
                 response = requests.get(
-                    url=ES_ENDPOINT,
+                    url=ES_SEARCH_ENDPOINT,
                     data=json.dumps(query_body),
                     headers=header).json()
 
