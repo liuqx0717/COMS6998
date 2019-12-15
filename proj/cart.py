@@ -6,7 +6,6 @@ import uuid
 import time
 from decimal import Decimal
 
-CLIENT_ID = '2a2sr0e7ktos7b3l1r13tlq0g8'
 HEADERS = {
     "access-control-allow-origin": "*",
     "access-control-allow-headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,Access-Token",
