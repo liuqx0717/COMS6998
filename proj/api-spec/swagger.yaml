@@ -3,7 +3,7 @@ info:
   description: "COMS E6998 project"
   version: "1.0.0"
   title: "More for Less - a Promotion App"
-host: "api.6998.liuqx.net"
+host: "api.moreforless.liuqx.net"
 basePath: "/v1"
 
 tags:
@@ -22,17 +22,7 @@ schemes:
 - "https"
 
 paths:
-  /recommendation/random:
-    get:
-      tags:
-      - "recommendation"
-      responses:
-        200:
-          description: "Successful operation."
-          schema:
-            $ref: "#/definitions/Item"
-
-  /recommendation/location:
+  /recommendation:
     get:
       tags:
       - "recommendation"
@@ -43,12 +33,10 @@ paths:
         - in: query
           name: "lon"
           type: "number"
-
-  /recommendation/history:
-    get:
-      tags:
-      - "recommendation"
-
+      responses:
+        200:
+          type: "ItemArray"
+    
   /search
     get:
       tags:
@@ -56,7 +44,7 @@ paths:
       parameters:
       - in: query
         name: "s"
-        type: "Search"
+        type: "string"
 
 
       
@@ -338,18 +326,6 @@ definitions:
         type: "string" # url
 
 
-  Search:
-    type: "object"
-    properties:
-      keyWord:
-        type: "string"
-      priceMin:
-        type: "number"
-      priceMax:
-        type: "number"
-      distance:
-        type: "number"
-  
   # VisitorInfo:
   #   type: "object"
   #   required:
