@@ -13,7 +13,12 @@ def lambda_handler(event, context):
     try:
         if event['resource'] == '/myhome':
             if event['httpMethod'] == 'GET':
-                access_token = event['pathParameters']['accessToken']
+                if 'Access-Token' in event['headers']:
+                    access_token = event['headers']['Access-Token']
+                elif 'access-token' in event['headers']:
+                    access_token = event['headers']['access-token']
+                else:
+                    return make_response(400, 'Empty access token')
 
                 cognito = boto3.client('cognito-idp')
                 response = cognito.get_user(
@@ -43,7 +48,13 @@ def lambda_handler(event, context):
                 return make_response(200, user_profile)
 
             if event['httpMethod'] == 'PUT':
-                access_token = event['pathParameters']['accessToken']
+                if 'Access-Token' in event['headers']:
+                    access_token = event['headers']['Access-Token']
+                elif 'access-token' in event['headers']:
+                    access_token = event['headers']['access-token']
+                else:
+                    return make_response(400, 'Empty access token')
+
                 try:
                     body = json.loads(event['body'])
                 except:
@@ -85,5 +96,5 @@ def make_response(status_code, body):
     return {
         'statusCode': status_code,
         'body': json.dumps(body),
-        'header': HEADERS
+        'headers': HEADERS
     }

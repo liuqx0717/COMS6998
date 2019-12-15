@@ -5,7 +5,7 @@ from boto3.dynamodb.conditions import Key
 CLIENT_ID = '2a2sr0e7ktos7b3l1r13tlq0g8'
 HEADERS = {
     "access-control-allow-origin": "*",
-    "access-control-allow-headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "access-control-allow-headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,Access-Token",
     "access-control-allow-methods": "GET"
 }
 
@@ -14,7 +14,12 @@ def lambda_handler(event, context):
     try:
         if event['resource'] == '/orders':
             if event['httpMethod'] == 'GET':
-                access_token = event['pathParameters']['accessToken']
+                if 'Access-Token' in event['headers']:
+                    access_token = event['headers']['Access-Token']
+                elif 'access-token' in event['headers']:
+                    access_token = event['headers']['access-token']
+                else:
+                    return make_response(400, 'Empty access token')
 
                 cognito = boto3.client('cognito-idp')
                 response = cognito.get_user(
@@ -56,6 +61,5 @@ def make_response(status_code, body):
     return {
         'statusCode': status_code,
         'body': json.dumps(body),
-        'header': HEADERS
+        'headers': HEADERS
     }
-
