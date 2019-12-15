@@ -107,7 +107,7 @@ function generate_item_html(item_imgurl, item_title, item_price, item_finish_tim
                                     <img class="img-fluid" src="{item_imgurl}" alt="">
                                 </div>
                                 <div class="col-lg-9">
-                                    Title:{item_title}
+                                    <a href="#">Title:{item_title}</a>
                                     <br>
                                     Price:{item_price}
                                     <br>

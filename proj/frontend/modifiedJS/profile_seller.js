@@ -1,7 +1,9 @@
 // var get_usr_info = "https://p4pv3uijkk.execute-api.us-east-1.amazonaws.com/Test";
 var baseUrl = "https://api.moreforless.liuqx.net/v1";
-// find token from session storage
+
+// find token from session storage. This token will expire every 60 mins
 var token = "eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzYzFkNzkyMS1lYmZkLTRmMjItYTlkMS1iNmM3Mjc1NWY4MWIiLCJldmVudF9pZCI6IjNlOGJhN2JiLWNiZmItNDM4NC05YjU5LWMwMTNjNjcxOTNiMCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzYzODk2MjAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjM5MzIyMCwiaWF0IjoxNTc2Mzg5NjIwLCJ2ZXJzaW9uIjoyLCJqdGkiOiJkN2Y3MjliZS1jOGZjLTQyOGYtYWRiZC1hMDNjOGRlYTYxYzYiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiM2MxZDc5MjEtZWJmZC00ZjIyLWE5ZDEtYjZjNzI3NTVmODFiIn0.HHNvnDcyzciPajvbt5DvjI6IgeTTnlNEPXjGAdKGqKh2DJESZfJNVSF1bD8yHHmQDd5iZqTtj4F_WriWCMEd6GFI9wz8bX1iXY_OJ2eAACIHT1lnWaBYkm5agzupixkaJ7xC719q5eGzXmSyZ14xywx-LIUuTqk80P_rYawy9SYthkpQot-WmW2VatK9B-ARvHwqCumDPa_i3N7v6dpsc8NSAnWS53YaabQgcgfcZsUWyZno9od1kKTivopX3U_GIuUcU-Unhs9B5WgfbLCOTgUP5ZaiuT-r6jWbdz4CrGw_5Dw_7a9xDyU8OkS4UL305fKolHv7Cj_fJ1XtNYwxDw";
+
 $(document).ready(function() {
     // call for /myhome GET API to get user info
     $.ajax({
@@ -107,7 +109,7 @@ function generate_item_html(item_imgurl, item_title, item_price, item_finish_tim
                                     <img class="img-fluid" src="{item_imgurl}" alt="">
                                 </div>
                                 <div class="col-lg-9">
-                                    Title:{item_title}
+                                    <a href="#">Title:{item_title}</a>
                                     <br>
                                     Price:{item_price}
                                     <br>
@@ -142,39 +144,39 @@ function show_orders(response) {
             var item_title = "";
             var item_imgurl = "";
 
-            var response1 =
-                {
-                    "id": "123456",
-                    "title": "title",
-                    "imageUrl": [
-                        "https://dcist.com/wp-content/uploads/sites/3/2019/08/bunnies_web-1500x1000.jpg",
-                        "https://dcist.com/wp-content/uploads/sites/3/2019/08/bunnies_web-1500x1000.jpg"
-                    ],
-                    "price": 150,
-                    "prevPrice": 200
-                };
-
-            item_title = response1.title;
-            item_price = response1.price;
-            item_imgurl = response1.imageUrl[0];
-            // $.ajax({
-            //     type: "GET",
-            //     url: baseUrl + "/items/" + item_id,
-            //     crossDomain: true,
-            //     dataType: "json",
-            //     headers:{
-            //         'access-token':token
-            //     },
-            //     success: function(response){
-            //         item_title = response["title"];
-            //         item_price = response["price"];
-            //         item_imgurl = response["imageUrl"][0];
-            //     },
-            //     error: function(xhr, status, error){
-            //         errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
-            //         alert("alert-danger" + errMsg);
-            //     }
-            // });
+            // var response1 =
+            //     {
+            //         "id": "123456",
+            //         "title": "title",
+            //         "imageUrl": [
+            //             "https://dcist.com/wp-content/uploads/sites/3/2019/08/bunnies_web-1500x1000.jpg",
+            //             "https://dcist.com/wp-content/uploads/sites/3/2019/08/bunnies_web-1500x1000.jpg"
+            //         ],
+            //         "price": 150,
+            //         "prevPrice": 200
+            //     };
+            //
+            // item_title = response1.title;
+            // item_price = response1.price;
+            // item_imgurl = response1.imageUrl[0];
+            $.ajax({
+                type: "GET",
+                url: baseUrl + "/items/" + item_id,
+                crossDomain: true,
+                dataType: "json",
+                headers:{
+                    'access-token':token
+                },
+                success: function(response){
+                    item_title = response["title"];
+                    item_price = response["price"];
+                    item_imgurl = response["imageUrl"][0];
+                },
+                error: function(xhr, status, error){
+                    errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
+                    alert("alert-danger" + errMsg);
+                }
+            });
             var item_content = generate_item_html(item_imgurl, item_title, item_price, item_finish_time, order_status, order_id);
             $("#profile_item_list").prepend(item_content);
         }
