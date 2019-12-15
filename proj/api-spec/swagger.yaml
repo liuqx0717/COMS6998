@@ -265,6 +265,9 @@ definitions:
         type: "integer"
       sellerId:
         type: "string"
+      sellerInfo:
+        type:
+          $ref: "#/definitions/UserProfile"
       title:
         type: "string"
       description:
@@ -304,10 +307,13 @@ definitions:
         type: "array"
         items:
           type: "string"
-      seller:
-        type: "string"
       buyer:
         type: "string"
+      seller:
+        type: "string"
+      sellerInfo:
+        type:
+          $ref: "#/definitions/UserProfile"
       price:
         type: "number"
       prvPrice:
