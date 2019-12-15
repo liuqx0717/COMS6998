@@ -1,7 +1,7 @@
 import boto3
 import json
 from boto3.dynamodb.conditions import Key
-from botocore.vendored import requests
+import requests
 import uuid
 import time
 from decimal import Decimal
