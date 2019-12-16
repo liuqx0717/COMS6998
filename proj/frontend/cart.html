@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="img/favicon.png" type="image/png">
+	<title>My Cart</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="vendors/linericon/style.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+	<link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css">
+	<link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
+	<link rel="stylesheet" href="vendors/animate-css/animate.css">
+	<link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css">
+	<!-- main css -->
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+	<!--================Header Menu Area =================-->
+	<!--================Header Menu Area =================-->
+
+	<!--================Home Banner Area =================-->
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-center">
+					<h2>Shopping Cart</h2>
+					<div class="page_link">
+						<a href="index.html">Home</a>
+						<a href="cart.html">Cart</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Home Banner Area =================-->
+
+	<!--================Cart Area =================-->
+	<section class="cart_area">
+		<div class="container">
+			<center><h2 id=cartEmpty></h2></center>
+			<div class="cart_inner">
+				<div class="table-responsive" id="cart">					
+
+					<!-- <table class="table">						
+						<thead>
+							<tr>
+								<th scope="col">Product</th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+								<th scope="col">Price</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td>
+									<div class="media">
+										<div class="d-flex">
+											<img src="img/product/single-product/cart-1.jpg">
+										</div>
+										<div class="media-body">
+											<p>Minimalistic shop for multipurpose use</p>
+										</div>
+									</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td>
+									<h5>$720.00</h5>
+								</td>
+							</tr>
+
+							<tr>
+								<td>
+
+								</td>
+								<td>
+
+								</td>
+								<td>
+									<h5>Subtotal</h5>
+								</td>
+								<td>
+									<h5>$2160.00</h5>
+								</td>
+							</tr>
+
+							<tr class="out_button_area">
+								<td>									
+								</td>	
+								<td>									
+								</td>								
+								<td>							
+								</td>	
+								<td>
+									<div class="checkout_btn_inner">
+										<a class="gray_btn" href="index.html">Continue Shopping</a>										
+										<a class="main_btn" href="#">Finalize This Order</a>
+									</div>
+								</td>						
+							</tr>
+						</tbody>
+					</table> -->
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Cart Area =================-->
+
+	<!--================ Subscription Area ================-->
+	<!--================ End Subscription Area ================-->
+
+	<!--================ start footer Area  =================-->
+	<footer class="footer-area section_gap">
+		<div class="container">
+			<!-- multimedia removed -->
+			<div class="row footer-bottom d-flex justify-content-between align-items-center">
+				<p class="col-lg-12 footer-text text-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</p>
+			</div>
+		</div>
+	</footer>
+	<!--================ End footer Area  =================-->
+
+
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/popper.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/stellar.js"></script>
+	<script src="vendors/lightbox/simpleLightbox.min.js"></script>
+	<script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+	<script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+	<script src="vendors/isotope/isotope-min.js"></script>
+	<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+	<script src="js/jquery.ajaxchimp.min.js"></script>
+	<script src="js/mail-script.js"></script>
+	<script src="vendors/jquery-ui/jquery-ui.js"></script>
+	<script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+	<script src="vendors/counter-up/jquery.counterup.js"></script>
+	<script src="js/theme.js"></script>
+	<script>
+
+		function finalizeOrder(paypal, OrderId){
+			console.log("finalizeOrder function is executed.");
+			$.ajax({	
+				url: "https://api.moreforless.liuqx.net/v1/cart?order=" + OrderId,
+				type: 'POST',
+				// url: "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_search/",
+				// type: 'GET',
+				dataType: 'json',			
+			}).then(function(){
+				document.location.reload(true);
+				window.open(paypal);	
+			})									
+		}
+
+		$(document).ready(function(){		
+
+			const cartAPI = "someURL";
+			var user_id;
+
+			$.ajax({
+				// url: cartAPI + "/" + user_id,
+				url: "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_search",
+				type: 'GET',
+				dataType: 'json',			
+			}).then(function(orders){				
+				
+				// This is mock data.
+				orders = [
+					{
+						"id":"someOrderID",
+						"sellerInfo":{
+							"userName":"Apple, Inc.",
+							"paypalUrl":"https://www.paypal.com/us/home"
+						},
+						"items":[
+							"9t5hBW8BuM8LsOt4NT1Z",
+							"-t7PCm8BuM8LsOt4NT26"
+						],
+						"price":33.98
+					},
+					{
+						"id":"someOrderID2",
+						"sellerInfo":{
+							"userName":"Shake Shack",
+							"paypalUrl":"https://www.paypal.com/us/home"
+						},
+						"items":[							
+							"-t7PCm8BuM8LsOt4NT26"
+						],
+						"price":24.99
+					}
+				];
+
+				if(orders.length === 0){
+					$('#cartEmpty').text("Your Cart is Empty now.");
+				}
+				
+				function getItem(item_id){
+					var request = new XMLHttpRequest();
+					var itemUrl = "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_doc/" + item_id;
+					request.open('GET', itemUrl, false);  // `false` makes the request synchronous
+					request.send(null);
+					return JSON.parse((request.response));
+				}
+
+
+				
+				for(var i=0; i<orders.length; i++){
+					var order = orders[i]
+					items = order['items']
+					$('#cart').append(
+						'<table class="table">' +
+						
+						'<thead>' +
+							'<tr>' +
+								'<th scope="col">Product from ' + order['sellerInfo']['userName'] + '</th>' +
+								'<th scope="col"></th>' +
+								'<th scope="col"></th>' +
+								'<th scope="col">Price</th>' +
+							'</tr>' +
+						'</thead>' +
+
+						'<tbody  id="tbody' + i + '">' +
+							'<tr>' +
+								'<td></td><td></td>' +
+								'<td>' +
+									'<h5>Subtotal</h5>' +
+								'</td>' +
+								'<td>' +
+									'<h5>$' + order['price'] + '</h5>' +
+								'</td>' +
+							'</tr>' +
+							'<tr class="out_button_area">' +
+								'<td></td><td></td><td></td>' +
+								'<td>' +
+									'<div class="checkout_btn_inner">' +
+										'<a class="gray_btn" href="index.html">Continue Shopping</a>' +
+										'<a class="main_btn" href="" onClick="finalizeOrder(`' + order['sellerInfo']['paypalUrl'] + '`, `' + order['id'] + '`)">Finalize This Order</a>' +
+									'</div>' +
+								'</td>' +
+							'</tr>' +
+						'</tbody>' +
+					'</table>' 
+					)
+					for(var j=0; j<items.length; j++){
+						item = getItem(items[j]);
+						tbodyId = '#tbody' + i
+						$(tbodyId).prepend(
+							'<tr>' +
+								'<td>' +
+									'<div class="media">' +
+										'<div class="d-flex">' +
+											'<img src="' + item['_source']['imageUrl'][0] + '"width=100 height=100>' +
+										'</div>' +
+										'<div class="media-body">' +
+											'<p>' + item['_source']['title'] + '</p>' +
+										'</div>' +
+									'</div>' +
+								'</td>' +
+								'<td></td><td></td>' +
+								'<td>' +
+									'<h5>$' + item['_source']['price'] + '</h5>' +
+								'</td>' +
+							'</tr>'
+						);
+					}
+				};				
+
+				
+				// if((imgUrls.length)>0){
+				// 	var elementInd = "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"><img src=\"" + imgUrls[0] + "\" width=\"60\" height=\"60\"></li>";
+				// 	$('#carousel-ind').append(elementInd);
+				// 	var elementInn = "<div class=\"carousel-item active\"><img class=\"d-block w-100\" src=\"" + imgUrls[0] + "\"></div>";
+				// 	$('#carousel-inn').append(elementInn);
+				// }
+				// for(var i=1; i<imgUrls.length; i++){
+				// 	var elementInd = "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"" + i + "\"><img src=\"" + imgUrls[i] + "\" width=\"60\" height=\"60\"></li>";
+				// 	$('#carousel-ind').append(elementInd);
+				// 	var elementInn = "<div class=\"carousel-item\"><img class=\"d-block w-100\" src=\"" + imgUrls[i] + "\"></div>";
+				// 	$('#carousel-inn').append(elementInn);
+				// };
+
+			});	
+		})
+	
+	</script>
+
+</body>
+
+</html>
