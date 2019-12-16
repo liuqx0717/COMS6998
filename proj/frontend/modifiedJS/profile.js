@@ -110,7 +110,7 @@ function generate_item_html(item_imgurl, item_id, item_title, item_price, item_f
                                     <img class="img-fluid" src="{item_imgurl}" alt="">
                                 </div>
                                 <div class="col-lg-9">
-                                    <a href="/single-product.html?item_id={item_id}">Title:{item_title}</a>
+                                    <a href="single-product.html?item_id={item_id}">Title:{item_title}</a>
                                     <br>
                                     Price:{item_price}
                                     <br>
