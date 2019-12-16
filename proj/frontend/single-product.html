@@ -19,6 +19,7 @@
 	<!-- main css -->
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/responsive.css">
+
 </head>
 
 <body>
@@ -120,7 +121,7 @@
 							</button>
 						</div> -->
 						<div class="card_area">
-							<a class="main_btn" href="cart.html" onclick="addCart()">Add to Cart</a>
+							<a class="main_btn" onclick="addCart()"><font color='white'>Add to Cart</font></a>
 							<!-- <a class="icon_btn" href="#">
 								<i class="lnr lnr lnr-diamond"></i>
 							</a>
@@ -176,96 +177,110 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 	<script>
 		
-	function getQueryVariable(variable) {		
-		var query = window.location.search.substring(1);
-		var vars = query.split('&');
-		for (var i = 0; i < vars.length; i++) {
-			var pair = vars[i].split('=');
-			if (decodeURIComponent(pair[0]) == variable) {
-				return decodeURIComponent(pair[1]);
+		function getQueryVariable(variable) {		
+			var query = window.location.search.substring(1);
+			var vars = query.split('&');
+			for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split('=');
+				if (decodeURIComponent(pair[0]) == variable) {
+					return decodeURIComponent(pair[1]);
+				}
 			}
+			console.log('Query variable %s not found', variable);
 		}
-		console.log('Query variable %s not found', variable);
-	}
 
-	var item_id = getQueryVariable("item_id");
+		var item_id = getQueryVariable("item_id");
 
-	$(document).ready(function(){		
+		$(document).ready(function(){
 
-		var itemUrl = "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_doc/" + item_id;
+			var itemUrl = "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_doc/" + item_id;
 
-		$.ajax({
-			url: itemUrl,
-			type: 'GET',
-			dataType: 'json',
-		}).then(function(data){
-			// console.log(data);
-			$('#item-description').text(data['_source']['description']);
-			$('#pricenum').text(data['_source']['price']);
-			$('#item-title').text(data['_source']['title']);
-			$('#prvprice').text(data['_source']['prvPrice']);
+			$.ajax({
+				url: itemUrl,
+				type: 'GET',
+				dataType: 'json',
+			}).then(function(data){
+				// console.log(data);
+				$('#item-description').text(data['_source']['description']);
+				$('#pricenum').text(data['_source']['price']);
+				$('#item-title').text(data['_source']['title']);
+				$('#prvprice').text(data['_source']['prvPrice']);
 
-			var availability = data['_source']['available'];
-			if(availability === 1){
-				$('#availability').text("In Stock");
-			}else{
-				$('#availability').text("Unavailable");
-			};
+				var availability = data['_source']['available'];
+				if(availability === 1){
+					$('#availability').text("In Stock");
+				}else{
+					$('#availability').text("Unavailable");
+				};
 
-			var categories = data['_source']['category'];
-			for(var i=0; i<categories.length; i++){
-				var newCat = "<span>" + categories[i] + " " + "</span>"
-				$('#category').append(newCat);
-			};
+				var categories = data['_source']['category'];
+				for(var i=0; i<categories.length; i++){
+					var newCat = "<span>" + categories[i] + " " + "</span>";
+					$('#category').append(newCat);
+				};
 
-			var tags = data['_source']['tag'];
-			// console.log(tags)
-			for(var i=0; i<tags.length; i++){
-				var newTag = "<span>" + tags[i] + " " + "</span>"
-				// console.log(newTag);
-				$('#tag').append(newTag);
-			};
+				var tags = data['_source']['tag'];
+				// console.log(tags)
+				for(var i=0; i<tags.length; i++){
+					var newTag = "<span>" + tags[i] + " " + "</span>";
+					// console.log(newTag);
+					$('#tag').append(newTag);
+				};
 
-			var imgUrls = data['_source']['imageUrl'];
-			if((imgUrls.length)>0){
-				var elementInd = "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"><img src=\"" + imgUrls[0] + "\" width=\"60\" height=\"60\"></li>";
-				$('#carousel-ind').append(elementInd);
-				var elementInn = "<div class=\"carousel-item active\"><img class=\"d-block w-100\" src=\"" + imgUrls[0] + "\"></div>";
-				$('#carousel-inn').append(elementInn);
-			}
-			for(var i=1; i<imgUrls.length; i++){
-				var elementInd = "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"" + i + "\"><img src=\"" + imgUrls[i] + "\" width=\"60\" height=\"60\"></li>";
-				$('#carousel-ind').append(elementInd);
-				var elementInn = "<div class=\"carousel-item\"><img class=\"d-block w-100\" src=\"" + imgUrls[i] + "\"></div>";
-				$('#carousel-inn').append(elementInn);
-			};
+				var imgUrls = data['_source']['imageUrl'];
+				if((imgUrls.length)>0){
+					var elementInd = "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"><img src=\"" + imgUrls[0] + "\" width=\"60\" height=\"60\"></li>";
+					$('#carousel-ind').append(elementInd);
+					var elementInn = "<div class=\"carousel-item active\"><img class=\"d-block w-100\" src=\"" + imgUrls[0] + "\"></div>";
+					$('#carousel-inn').append(elementInn);
+				}
+				for(var i=1; i<imgUrls.length; i++){
+					var elementInd = "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"" + i + "\"><img src=\"" + imgUrls[i] + "\" width=\"60\" height=\"60\"></li>";
+					$('#carousel-ind').append(elementInd);
+					var elementInn = "<div class=\"carousel-item\"><img class=\"d-block w-100\" src=\"" + imgUrls[i] + "\"></div>";
+					$('#carousel-inn').append(elementInn);
+				};
 
-		});	
-		
-	});
-
-
-	AccessToken = 'eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzYzFkNzkyMS1lYmZkLTRmMjItYTlkMS1iNmM3Mjc1NWY4MWIiLCJldmVudF9pZCI6IjA4Y2ZmZjg4LWNhYzItNDA0MC1iMzVjLWViMGIyNzAwOTczZSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY0NjM2NzYsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjQ2NzI3NiwiaWF0IjoxNTc2NDYzNjc2LCJ2ZXJzaW9uIjoyLCJqdGkiOiJlMTRmMjU4Mi04NzQwLTQ3YzgtOGFlNy1kZDlmMmU1ZGZhOTMiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiM2MxZDc5MjEtZWJmZC00ZjIyLWE5ZDEtYjZjNzI3NTVmODFiIn0.VwnA2546yISIAToEu44tfigWzW4VZO2RUNQPgQnnpNbZqiwZsSe-WVDwbPLVP90LGdzu6azm9GqiBlOM7HSJqxy__Frg65tHCfNPdANS6LISp4CHTaQsLDHxTA1k_0idc1sL-eY2vLYrn91M4KJaoM-O60YzUjMnjSYFZdVSdpoYKiHwo1-SGr5gpaOFTwIYK3UmKABNYFKbLv9VX12aHvFluWdYzk13bj1PqWWDLvxwptJYFWqwL1fz9shZgf2EgU9zEr2Zu_d0w_7xgm461c2nmKeXd0SAH-u7HISQ_TBXX443f6tKX7vuwrFPFJYtYW9KOIZg8z70wWZQH_xN1A';
-
-	function addCart(){
-		$.ajax({			
-			type: "PUT",
-			url:  "https://api.moreforless.liuqx.net/v1/cart?item=" + item_id,
-			crossDomain: true,
-			// data: "",
-			dataType: "json",
-			headers: {"Access-Token": AccessToken},
-			success: function(response){
-				console.log(response);
-				alert("Item Added to Your Cart!");
-			},
-			error: function(xhr, status, error){
-				var errMsg = "Failed." + xhr.responseText + "\n" + status + "\n" + error;
-				alert(errMsg);
-			}
+			});
+			
 		});
-	}
-    
+		
+		AccessToken = 'eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzYzFkNzkyMS1lYmZkLTRmMjItYTlkMS1iNmM3Mjc1NWY4MWIiLCJldmVudF9pZCI6IjQwODZiYzkzLTg5NDktNDI1MC04ZDExLWNlMGVkMGQ5NmE2MiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1MzE0MDAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzNTAwMCwiaWF0IjoxNTc2NTMxNDAwLCJ2ZXJzaW9uIjoyLCJqdGkiOiJjYmY4MjBiNC1iYWE2LTQ4MjQtYTkzOC1hOGU0MmFkNWIyN2MiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiM2MxZDc5MjEtZWJmZC00ZjIyLWE5ZDEtYjZjNzI3NTVmODFiIn0.Za174u73hcUWvhj-FvhZccw7pnIIP9NPUkDjFjx4ubvSfcX052iGA6pvJVRjSshfcokonMtZBhWWCS9Kxj-lWsx019QU63VTfCPnDmygjn_JgZT7FcTzfONunL_k0cBmry7vltHGDAjpv3Osw1O6ycRhcGs6wl4aCzZrKg9mwwWSHMCeM-jLkZHAvZPoCHhY0MXAfwe2zkcH3HLwZ32j-QNOngleLxyy-mUqgGuBIi4P7VR1vvZrlWQkniNpCynZTMNjUel0b2M7a7WJ1oPA6xlnoPCPDziziU89Hw8Ix6VK8Ri_K6fRUBtwd8T6PfQFyyUkr0a9NVM23kyYBxI6nA';
+		
+		// function addCart(){
+		// 	$.ajax({			
+		// 		type: "PUT",
+		// 		url:  "https://api.moreforless.liuqx.net/v1/cart?item=" + item_id,
+		// 		crossDomain: true,
+		// 		// data: "",
+		// 		dataType: "json",
+		// 		headers: {"Access-Token": AccessToken},
+		// 		success: function(response){
+		// 			console.log(response);
+		// 			alert("Item Added to Your Cart!");
+		// 		},
+		// 		error: function(xhr, status, error){
+		// 			console.log("error!");
+		// 			var errMsg = "Failed." + xhr.responseText + "\n" + status + "\n" + error;
+		// 			alert(errMsg);
+		// 		}
+		// 	});
+		// }
+
+		function addCart(){
+			$.ajax({			
+				type: "PUT",
+				url:  "https://api.moreforless.liuqx.net/v1/cart?item=" + item_id,
+				// crossDomain: true,
+				// data: "",
+				// dataType: "json",
+				headers: {"Access-Token": AccessToken}
+			}).then(function(data){
+				alert(data);
+				window.open("cart.html");
+			})
+		}
+
   </script>
 
 </body>
