@@ -7,14 +7,20 @@ HEADERS = {
     "access-control-allow-methods": "GET"
 }
 ES_SEARCH_ENDPOINT = "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_search"
+IP_API_BASE = 'http://ip-api.com/json/'
 
 
 def lambda_handler(event, context):
     try:
         if event['resource'] == '/recommendation':
             if event['httpMethod'] == 'GET':
-                lat = event['queryStringParameters']['lat']
-                lon = event['queryStringParameters']['lon']
+                ip = event['requestContext']['identity']['sourceIp']
+
+                response = requests.get(IP_API_BASE + ip)
+                if response.status_code != 200:
+                    return make_response(response.status_code, response.reason)
+
+                lat, lon = response.json()['lat'], response.json()['lon']
 
                 query_body = {
                     "query": {
