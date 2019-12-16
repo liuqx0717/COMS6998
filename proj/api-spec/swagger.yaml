@@ -219,7 +219,7 @@ paths:
         name: "item"
         required: true
         type: "string"
-        description: "The url of the item"
+        description: "The id of the item"
       responses:
         200:
           description: "Successful operation."

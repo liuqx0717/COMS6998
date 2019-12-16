@@ -11,10 +11,10 @@ ES_SEARCH_ENDPOINT = "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-ea
 
 def lambda_handler(event, context):
     try:
-        if event['resource'] == '/recommend':
+        if event['resource'] == '/recommendation':
             if event['httpMethod'] == 'GET':
-                lat = event['lat']
-                lon = event['lon']
+                lat = event['queryStringParameters']['lat']
+                lon = event['queryStringParameters']['lon']
 
                 query_body = {
                     "query": {
@@ -61,7 +61,7 @@ def lambda_handler(event, context):
 
     except Exception as err:
         print(err)
-        return make_response(500, 'Internal error - /recommend')
+        return make_response(500, 'Internal error - /recommendation')
 
 
 def make_response(status_code, body):
