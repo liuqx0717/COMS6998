@@ -1,10 +1,13 @@
 var baseUrl = "https://api.moreforless.liuqx.net/v1";
 
 // find token from session storage. This token will expire every 60 mins
-var token = "eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzYzFkNzkyMS1lYmZkLTRmMjItYTlkMS1iNmM3Mjc1NWY4MWIiLCJldmVudF9pZCI6Ijg1Y2M0NjI4LWQ0ZDgtNGVmOC05NDg3LTM3NmQ2MmRiOGI1MiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1Mjk1NzEsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzMzE3MSwiaWF0IjoxNTc2NTI5NTcyLCJ2ZXJzaW9uIjoyLCJqdGkiOiIwOTliODliMi0yMTY2LTQzMmItODcyOC1kMjk5NGVjZjY5MTgiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiM2MxZDc5MjEtZWJmZC00ZjIyLWE5ZDEtYjZjNzI3NTVmODFiIn0.niw236YpX9bYe6D1ny8b0SqBfd1Z8k5keQgIIBYcNjb3i8Zuu627UJHIJzaqCCX_QqNfSH1YfbdiCz1S6uJyZK5YYxFK5H6M3b-SrJ_SGjvv6DWFzOeeO3KKH2SHjB6ltxDyGlnQkGXnMNvSbWmhQCC5B6YPXVbVSbHfZTf3sIkDjCnwA3Q0jmW2oEBrtDr7BPGICFsEIwEkjbJa53t4jWV7R1Xe2d7QBdHmsTuVM-xV14DB9I3ERdgKDFUjogyyUUHOSyNQpFA9HpNeNqRQ44SmufmTHBI7Lnd-H9r8_0Aes1uV5Mvlvcq3JKrqLRLa4kQpuxzezlJXMkegUI2NVg";
+// var token = "eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyOTQ4MGI3NC0zNzg3LTRjNjQtYmMxYi03ZWZiODEyOWFhNDciLCJldmVudF9pZCI6ImZjMDkyZDZhLTZiOGItNGFkYi04ZjFkLTJjNjIwYmE3NDAxNyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1MzIzMzAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzNTkzMCwiaWF0IjoxNTc2NTMyMzMwLCJ2ZXJzaW9uIjoyLCJqdGkiOiI2ZmMzZjkwNi02OWMwLTRjZTktYWU4MS00OTgwMGJlZjEwMzciLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiMjk0ODBiNzQtMzc4Ny00YzY0LWJjMWItN2VmYjgxMjlhYTQ3In0.KybOqJZNCfQVAdGcwdHAtONn2TLkT70Xvpwy7Bm1QtZlyRJNOQYWZrSXz36zD03noTcxSe3paGTP7gYuUNz8PpI4bJHL3RrOb6zyiGCM7AEhEoschZmbsZTxTfd1kANLfp29YoL4pRMaIRu6I_h7HTKgbYCIgrRmVZMJ1rJjlHFm3uPQk69Abm6mc5dNpfnA3nu9RRCeu9it0KeCUrIaIvIYjFE6AJIqcRPToOQFMi8IscRqrdaWpOmb4ZqZjPcfgv_wrTPW20gbuBNylkOZa9-iKiodGN9R2JnIvzb7NrhJmA_2P40JLuNT_wGFDgtYHTFRvyW176hHgd0Rw-YYLg";
+// var token = "eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzNjI3YjNlMS04MDg1LTQ3MDMtYjdhNC1kYzFlY2EzODczZWYiLCJldmVudF9pZCI6IjUyNGM4OTU2LWQzMzEtNDIyOS1iMWJkLWVlMjYyNWIzOGM1OCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1MzMyODcsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzNjg4NywiaWF0IjoxNTc2NTMzMjg3LCJ2ZXJzaW9uIjoyLCJqdGkiOiJiODliNjQ2OC0xOTA2LTQzODAtYTAxNi1lZTAxNGRjNDU5MDUiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiMzYyN2IzZTEtODA4NS00NzAzLWI3YTQtZGMxZWNhMzg3M2VmIn0.ntHvVE5-BDVVMPO3izIOnut7dzGGd9sQnmmQeyKoDAC0CNw3UdmCeMi1VSFFy7LkSVZh9u1KuXXsBq8_GJIR9O8Os2O74bQDf3XxkwlgmB-FdygWZb7v_GFRxnAL1oD33AH0SFboFAb1NjzVG2TrDFHkurFlFXVIQfOd2PVCA-SXi_BT1P4tICMnOOqfh6ihFhXl0Pp2UqJswFZAIw9fJuRWshYlNSwqgpNCKQTLjiYZVEn_X93hJCWHXZip21DkJj8AzMxn_R8meME9PKTyJ8SjmAT_mtlHg_AN2VFEcy-iGs6SfQ_5YCWlg57cpoqLbbDTLvqW4VWkUjpxKQEz2w";
+var token = "eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyOTQ4MGI3NC0zNzg3LTRjNjQtYmMxYi03ZWZiODEyOWFhNDciLCJldmVudF9pZCI6Ijk5ZGJmOWI4LWUwMzEtNGFhZS1hNjI1LWZhMmI3ZTM3ZDU5MSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1MzYwMzgsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzOTYzOCwiaWF0IjoxNTc2NTM2MDM4LCJ2ZXJzaW9uIjoyLCJqdGkiOiJmYzk1YTM4YS03YWUzLTRmOGQtOGNlZi00MWZjOTk2OTJjMWIiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiMjk0ODBiNzQtMzc4Ny00YzY0LWJjMWItN2VmYjgxMjlhYTQ3In0.TgT0RJvtiZcEdgyF86ezbYo5vD-s_Ay1vHGIX0L37F1oTtJ1zCvamv9JKF7lbSOUc3rq0zdYN71i92-Fk7hxeYitUOYPT0hWS4hoUBLYxIwSlV_JPEOpwbCClOLuiQE-edkRqMR4EXtjne4Ctk2Uwf6187VCFPstCWOyxqVVgSCInScgFEWm_Iuaf2pgQa3SNzVwtBpnNsJRRfATz-uSqMP6csQddU1885ExEtu1DSnoGsRPSZzBSHqG0ruV4e3VcyoX2dP1Stu7XyHW4ZxRwZi7HJlXCZjlUCnq5YP-deCn_w7JcjG1MhZRgkm4nqt4fELV90PyHaO-BZoQLueqVw";
 // var token = sessionStorage.getItem('access-token');
 $(document).ready(function() {
     // call for /myhome GET API to get user info
+    var new_user = false;
     $.ajax({
         type: "GET",
         url: baseUrl + '/myhome',
@@ -13,33 +16,39 @@ $(document).ready(function() {
             'access-token':token
         },
         dataType: "json",
-        success: function(response){
-            show_profile(response);
+        async:false,
+        success: function(response, textStatus, xhr){
+            if (xhr.status === 204){
+                new_user = true;
+                alert("Please upload your user type. Seller or buyer")
+            } else {show_profile(response);}
         },
         error: function(xhr, status, error){
             errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
-            alert("alert-danger" + errMsg);
+            alert("/myhome function" + errMsg);
         }
     });
 
 
     // call for /orders GET API to get fininshed order info
-    $.ajax({
-        type: "GET",
-        url: baseUrl + "/orders",
-        crossDomain: true,
-        headers:{
-            'access-token':token
-        },
-        dataType: "json",
-        success: function(response){
-            show_orders(response);
-        },
-        error: function(xhr, status, error){
-            errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
-            alert("alert-danger" + errMsg);
-        }
-    });
+    if (!new_user) {
+        $.ajax({
+            type: "GET",
+            url: baseUrl + "/orders",
+            crossDomain: true,
+            headers: {
+                'access-token': token
+            },
+            dataType: "json",
+            success: function (response) {
+                show_orders(response);
+            },
+            error: function (xhr, status, error) {
+                errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
+                alert("/orders function" + errMsg);
+            }
+        });
+    }
 });
 
 function show_profile(response) {
@@ -57,22 +66,28 @@ function show_profile(response) {
 
 function update_user(event){
     event.preventDefault();
-    console.log("update_user");
     var new_name = $("#profile_new_user_name").val();
-    var new_email = $("#profile_new_user_email").val();
+    // var new_email = $("#profile_new_user_email").val();
     var new_phoneNumber = $("#profile_new_user_phoneNumber").val();
     var new_address = $("#profile_new_user_address").val();
+    var new_paypalUrl = $("#profile_new_user_paypalUrl").val();
+    var user_type = $("#profile_user_type").text();
+    if (user_type === ""){
+        user_type = $("#profile_new_user_type").val();
+    }
     var data = JSON.stringify({
         "userName": new_name,
         "address": new_address,
-        "email": new_email,
-        "phone": new_phoneNumber
+        // "email": new_email,
+        "phone": new_phoneNumber,
+        "type": user_type,
+        "paypalUrl": new_paypalUrl
     });
-
+    console.log(data);
     // call for /myhome PUT API to update users
     $.ajax({
         type: "PUT",
-        url: get_usr_info,
+        url: baseUrl + '/myhome',
         crossDomain: true,
         data: data,
         dataType: "json",
@@ -81,11 +96,11 @@ function update_user(event){
         },
         success: function(response){
             alert("Update Successful!");
-            document.location = "#";
+            document.location = "profile.html";
         },
         error: function(xhr, status, error){
             errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
-            alert("alert-danger" + errMsg);
+            alert("/myhome PUT function" + errMsg);
         }
     });
 }
@@ -152,12 +167,11 @@ function show_orders(response) {
                 },
                 error: function(xhr, status, error){
                     errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
-                    alert("alert-danger" + errMsg);
+                    alert("/items/ GET function" + errMsg);
                 }
             });
             var item_content = generate_item_html(item_imgurl, item_title, item_price, item_finish_time, item_seller_name, item_seller_address, order_status, order_id);
             $("#profile_item_list").prepend(item_content);
         }
     }
-    alert(JSON.stringify(response));
 }

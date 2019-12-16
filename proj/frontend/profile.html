@@ -74,30 +74,28 @@
                             <div class="comment-form">
                                 <h4>Update your profile</h4>
                                 <form>
-                                    <!--
-                                    userName:
-                                    type: "string"
-                                    address:
-                                    type: "string"
-                                    phone:
-                                    type: "string"
-                                    email:
-                                    type: "string"
-                                    paypalUrl:
-                                    type: "string" # url
-                                    -->
                                     <div class="form-group name">
                                         <input type="text" class="form-control" id="profile_new_user_name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter New Name'">
                                     </div>
-                                    <div class="form-group email">
-                                        <input type="email" class="form-control" id="profile_new_user_email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter New email address'">
-                                    </div>
+                                    <!--<div class="form-group email">-->
+                                        <!--<input type="email" class="form-control" id="profile_new_user_email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter New email address'">-->
+                                    <!--</div>-->
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="profile_new_user_phoneNumber" placeholder="Enter New phone number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter New phone number'">
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="profile_new_user_address" placeholder="Street, City, State, Postcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street, City, State, Postcode'">
                                     </div>
+                                    <div class="form-group">
+                                        <select class="form-control" id="profile_new_user_type">
+                                            <option value="" disabled selected hidden>User type, cannot change once set</option>
+                                            <option value="buyer">buyer</option>
+                                            <option value="seller">seller</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="profile_new_user_paypalUrl" placeholder="Enter New paypalUrl" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter New paypalUrl'">
                                     </div>
