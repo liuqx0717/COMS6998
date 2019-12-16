@@ -1,23 +1,20 @@
 const baseUrl = "https://api.moreforless.liuqx.net/v1/";
 
-function loadHomepage(){
-    refreshRecomm();
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(refreshRecomm);
-    }
+var searchStr = "";
+
+function loadSearchPage(){
+    searchStr = getQueryVariable("s");
+    refreshSearchResults(searchStr);
 }
 
-function refreshRecomm(position = null){
-    var queryStr = "";
-    if(position != null){
-        queryStr = "?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
-        alert(queryStr);
-    }
+function refreshSearchResults(s){
+    queryStr = "?s=" + encodeURIComponent(s);
+    alert(queryStr);
 
     //var data = "";
     //$.ajax({
     //    type: "GET",
-    //    url: baseUrl + "recommendation" + queryStr,
+    //    url: baseUrl + "search" + queryStr,
     //    crossDomain: true,
     //    data: data,
     //    dataType: "json",
@@ -53,17 +50,17 @@ function refreshRecomm(position = null){
             "prevPrice": 2000
         }
     ];
-    $("#recomm").empty();
+    $("#searchResults").empty();
     for(var i = 0, l = response.length; i < l; i++){
         var item = response[i];
         // TODO
         var itemLink = "#";
-        addRecommItem(item.title, item.imageUrl[0], itemLink, item.price, item.prevPrice);
+        addSearchItem(item.title, item.imageUrl[0], itemLink, item.price, item.prevPrice);
     }
 
 }
 
-function addRecommItem(title, imgUrl, link, price, prevPrice = 0){
+function addSearchItem(title, imgUrl, link, price, prevPrice = 0){
     htmlStr = 
     '<div class="col">' +
        ' <div class="f_p_item">' +
@@ -90,5 +87,20 @@ function addRecommItem(title, imgUrl, link, price, prevPrice = 0){
         '</div>' +
     '</div>';
 
-    $("#recomm").append(htmlStr);
+    $("#searchResults").append(htmlStr);
+}
+
+
+
+
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split('&');
+  for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (decodeURIComponent(pair[0]) == variable) {
+          return decodeURIComponent(pair[1]);
+      }
+  }
+  console.log('Query variable %s not found', variable);
 }
