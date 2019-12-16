@@ -93,13 +93,12 @@
 								</a>
 								<container id="category"></container>
 							</li>
-							<li>
-								<!-- <a class="active" href="#"><span>Category</span> : Household</a> -->
+							<!-- <li>								
 								<a class="active">
 									<span>Tags</span> : 
 								</a>
 								<container id="tag"></container>
-							</li>
+							</li> -->
 							<li>
 								<a href="#">
 									<span>Availibility</span> : <span id=availability></span></a>
@@ -219,13 +218,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 					$('#category').append(newCat);
 				};
 
-				var tags = data['_source']['tag'];
-				// console.log(tags)
-				for(var i=0; i<tags.length; i++){
-					var newTag = "<span>" + tags[i] + " " + "</span>";
-					// console.log(newTag);
-					$('#tag').append(newTag);
-				};
+				// var tags = data['_source']['tag'];
+				// // console.log(tags)
+				// for(var i=0; i<tags.length; i++){
+				// 	var newTag = "<span>" + tags[i] + " " + "</span>";
+				// 	// console.log(newTag);
+				// 	$('#tag').append(newTag);
+				// };
 
 				var imgUrls = data['_source']['imageUrl'];
 				if((imgUrls.length)>0){
