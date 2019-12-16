@@ -155,58 +155,60 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/theme.js"></script>
 	<script>
 
+		AccessToken = 'eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzYzFkNzkyMS1lYmZkLTRmMjItYTlkMS1iNmM3Mjc1NWY4MWIiLCJldmVudF9pZCI6IjQwODZiYzkzLTg5NDktNDI1MC04ZDExLWNlMGVkMGQ5NmE2MiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1MzE0MDAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzNTAwMCwiaWF0IjoxNTc2NTMxNDAwLCJ2ZXJzaW9uIjoyLCJqdGkiOiJjYmY4MjBiNC1iYWE2LTQ4MjQtYTkzOC1hOGU0MmFkNWIyN2MiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiM2MxZDc5MjEtZWJmZC00ZjIyLWE5ZDEtYjZjNzI3NTVmODFiIn0.Za174u73hcUWvhj-FvhZccw7pnIIP9NPUkDjFjx4ubvSfcX052iGA6pvJVRjSshfcokonMtZBhWWCS9Kxj-lWsx019QU63VTfCPnDmygjn_JgZT7FcTzfONunL_k0cBmry7vltHGDAjpv3Osw1O6ycRhcGs6wl4aCzZrKg9mwwWSHMCeM-jLkZHAvZPoCHhY0MXAfwe2zkcH3HLwZ32j-QNOngleLxyy-mUqgGuBIi4P7VR1vvZrlWQkniNpCynZTMNjUel0b2M7a7WJ1oPA6xlnoPCPDziziU89Hw8Ix6VK8Ri_K6fRUBtwd8T6PfQFyyUkr0a9NVM23kyYBxI6nA';
+
 		function finalizeOrder(paypal, OrderId){
 			console.log("finalizeOrder function is executed.");
-			$.ajax({	
+			$.ajax({
 				url: "https://api.moreforless.liuqx.net/v1/cart?order=" + OrderId,
 				type: 'POST',
 				// url: "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_search/",
 				// type: 'GET',
-				dataType: 'json',			
+				dataType: 'json',
 			}).then(function(){
 				document.location.reload(true);
-				window.open(paypal);	
+				window.open(paypal);
+				// window.open("https://www.google.com/");
 			})									
-		}
+		}		
 
 		$(document).ready(function(){		
 
-			const cartAPI = "someURL";
-			var user_id;
-
-			$.ajax({
-				// url: cartAPI + "/" + user_id,
-				url: "https://search-e6998final-iijtdbqlcuarkxq23kyrqvmyii.us-east-1.es.amazonaws.com/item/_search",
+			$.ajax({				
+				url: "https://api.moreforless.liuqx.net/v1/cart",
 				type: 'GET',
-				dataType: 'json',			
+				dataType: 'json',
+				headers: {"Access-Token": AccessToken}
 			}).then(function(orders){				
 				
 				// This is mock data.
-				orders = [
-					{
-						"id":"someOrderID",
-						"sellerInfo":{
-							"userName":"Apple, Inc.",
-							"paypalUrl":"https://www.paypal.com/us/home"
-						},
-						"items":[
-							"9t5hBW8BuM8LsOt4NT1Z",
-							"-t7PCm8BuM8LsOt4NT26"
-						],
-						"price":33.98
-					},
-					{
-						"id":"someOrderID2",
-						"sellerInfo":{
-							"userName":"Shake Shack",
-							"paypalUrl":"https://www.paypal.com/us/home"
-						},
-						"items":[							
-							"-t7PCm8BuM8LsOt4NT26"
-						],
-						"price":24.99
-					}
-				];
+				// orders = [
+				// 	{
+				// 		"id":"someOrderID",
+				// 		"sellerInfo":{
+				// 			"userName":"Apple, Inc.",
+				// 			"paypalUrl":"https://www.paypal.com/us/home"
+				// 		},
+				// 		"items":[
+				// 			"9t5hBW8BuM8LsOt4NT1Z",
+				// 			"-t7PCm8BuM8LsOt4NT26"
+				// 		],
+				// 		"price":33.98
+				// 	},
+				// 	{
+				// 		"id":"someOrderID2",
+				// 		"sellerInfo":{
+				// 			"userName":"Shake Shack",
+				// 			"paypalUrl":"https://www.paypal.com/us/home"
+				// 		},
+				// 		"items":[							
+				// 			"-t7PCm8BuM8LsOt4NT26"
+				// 		],
+				// 		"price":24.99
+				// 	}
+				// ];
+
+				console.log(JSON.stringify(orders))
 
 				if(orders.length === 0){
 					$('#cartEmpty').text("Your Cart is Empty now.");
@@ -219,7 +221,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 					request.send(null);
 					return JSON.parse((request.response));
 				}
-
 
 				
 				for(var i=0; i<orders.length; i++){
@@ -252,7 +253,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 								'<td>' +
 									'<div class="checkout_btn_inner">' +
 										'<a class="gray_btn" href="index.html">Continue Shopping</a>' +
-										'<a class="main_btn" href="" onClick="finalizeOrder(`' + order['sellerInfo']['paypalUrl'] + '`, `' + order['id'] + '`)">Finalize This Order</a>' +
+										'<a class="main_btn" onClick="finalizeOrder(`' + order['sellerInfo']['paypalUrl'] + '`, `' + order['id'] + '`)"><font color="white">Click to Pay</font></a>' +
 									'</div>' +
 								'</td>' +
 							'</tr>' +
