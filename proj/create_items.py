@@ -52,8 +52,8 @@ def lambda_handler(event, context):
                     return make_response(403, 'Forbidden. Buyer has no access to post items')
 
                 # extract item info
-                item = event['item']
-                item['seller'] = id
+                item = json.loads(event['body'])
+                item['sellerId'] = id
                 item['sellerInfo'] = user_profile
                 item['location'] = {}
                 item['location']['lon'], item['location']['lat'], info = get_coordinate(user_profile['address'])

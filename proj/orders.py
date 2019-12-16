@@ -1,7 +1,6 @@
 import boto3
 import json
 from boto3.dynamodb.conditions import Key
-from decimal import Decimal
 import time
 
 HEADERS = {
@@ -46,19 +45,20 @@ def lambda_handler(event, context):
                 response = orders_table.query(
                     IndexName=idx,
                     KeyConditionExpression=Key(user_type).eq(id),
-                    FilterExpression=Key('status').eq('finished')
+                    FilterExpression=Key('stat').eq('finished')
                 )
 
                 orders = response['Items']
                 for order in orders:
                     for attr in order:
                         if attr == 'finishTime':
-                            order[attr] = time.ctime(order[attr])
-                        if type(order[attr]) == Decimal:
+                            order[attr] = time.ctime(float(order[attr]))
+                        if attr == 'price' or attr == 'prvPrice':
                             order[attr] = float(order[attr])
-                        if attr == 'itms':
-                            order['items'] = order[attr]
-                            del order[attr]
+                    order['items'] = order['itms']
+                    order['status'] = order['stat']
+                    del order['itms']
+                    del order['stat']
                 orders = sorted(orders, key=lambda val: val['finishTime'], reverse=True)
 
                 return make_response(200, orders)

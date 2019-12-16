@@ -1,5 +1,6 @@
 import json
 import requests
+import boto3
 
 HEADERS = {
     "access-control-allow-origin": "*",
@@ -42,7 +43,7 @@ def lambda_handler(event, context):
                     return make_response(404, 'User does not exist')
 
                 item_id = event['pathParameters']['id']
-                item_info = event['body']
+                item_info = json.loads(event['body'])
 
                 response = requests.get(ES_DOC_ENDPOINT + item_id)
                 if response.status_code != 200:

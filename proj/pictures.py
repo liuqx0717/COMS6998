@@ -1,6 +1,7 @@
 import boto3
 import json
 import uuid
+import base64
 
 HEADERS = {
     "access-control-allow-origin": "*",
@@ -18,7 +19,7 @@ def lambda_handler(event, context):
                 image_path = '/tmp/' + image_name
 
                 with open(image_path, 'wb') as f:
-                    f.write(image)
+                    f.write(base64.b64decode(image))
 
                 bucket = boto3.resource('s3').Bucket('mfl-pictures-bucket')
                 bucket.upload_file(image_path, image_name)
@@ -27,7 +28,7 @@ def lambda_handler(event, context):
                 return make_response(200, image_url)
 
             if event['httpMethod'] == 'DELETE':
-                image_url = event['url']
+                image_url = event['queryStringParameters']['url']
                 image_name = image_url.split('/')[-1]
 
                 bucket = boto3.resource('s3').Bucket('mfl-pictures-bucket')
