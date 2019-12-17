@@ -3,13 +3,14 @@ var baseUrl = "https://api.moreforless.liuqx.net/v1";
 
 // find token from cookie
 var token = getToken();
-console.log("TOKEN: " + token);
-if (token===""){
-    alert("Need to Login First");
-    window.location.href = login_page;
-}
-// var token = "123";
+
 $(document).ready(function() {
+    console.log("TOKEN: " + token);
+    if (token===""){
+        alert("Need to Login First");
+        window.location.href = login_page;
+        return false;
+    }
     // call for /myhome GET API to get user info
     console.log("This is token "+ token);
     var new_user = false;
