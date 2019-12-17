@@ -19,11 +19,74 @@
 	<!-- main css -->
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/responsive.css">
+	<script src="./common.js"></script>
 </head>
 
 <body>
 
 	<!--================Header Menu Area =================-->
+	<header class="header_area">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="index.html">
+						<img src="img/logo.png" alt="">
+					</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<div class="row w-100 align-items-center">
+							<div class="col-lg-9 pr-0">
+								<div class="row justify-content-center">
+									<div class="col-lg-10">
+										<div id="mc_embed_signup">
+											<form onsubmit="onSearch(event);" novalidate="true" class="subscription relative">
+												<input type="text" id="searchBox" placeholder="Enter text to search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter text to search'" required="">
+												<!-- <div style="position: absolute; left: -5000px;">
+                                                    <input type="text" name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="">
+                                                </div> -->
+												<button type="submit" class="newsl-btn">Search Nearby!</button>
+												<div class="info"></div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<ul class="nav navbar-nav navbar-right right_nav pull-right">
+
+									<hr>
+
+									<li class="nav-item">
+										<a href="./profile.html" class="icons">
+											<i class="fa fa-user" aria-hidden="true"></i>
+										</a>
+									</li>
+
+									<hr>
+
+									<li class="nav-item">
+										<a href="./cart.html" class="icons">
+											<i class="lnr lnr lnr-cart"></i>
+										</a>
+									</li>
+
+									<hr>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
 	<!--================Header Menu Area =================-->
 
 	<!--================Home Banner Area =================-->
@@ -155,8 +218,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/theme.js"></script>
 	<script>
 
-		AccessToken = 'eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzYzFkNzkyMS1lYmZkLTRmMjItYTlkMS1iNmM3Mjc1NWY4MWIiLCJldmVudF9pZCI6IjQwODZiYzkzLTg5NDktNDI1MC04ZDExLWNlMGVkMGQ5NmE2MiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1MzE0MDAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzNTAwMCwiaWF0IjoxNTc2NTMxNDAwLCJ2ZXJzaW9uIjoyLCJqdGkiOiJjYmY4MjBiNC1iYWE2LTQ4MjQtYTkzOC1hOGU0MmFkNWIyN2MiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiM2MxZDc5MjEtZWJmZC00ZjIyLWE5ZDEtYjZjNzI3NTVmODFiIn0.Za174u73hcUWvhj-FvhZccw7pnIIP9NPUkDjFjx4ubvSfcX052iGA6pvJVRjSshfcokonMtZBhWWCS9Kxj-lWsx019QU63VTfCPnDmygjn_JgZT7FcTzfONunL_k0cBmry7vltHGDAjpv3Osw1O6ycRhcGs6wl4aCzZrKg9mwwWSHMCeM-jLkZHAvZPoCHhY0MXAfwe2zkcH3HLwZ32j-QNOngleLxyy-mUqgGuBIi4P7VR1vvZrlWQkniNpCynZTMNjUel0b2M7a7WJ1oPA6xlnoPCPDziziU89Hw8Ix6VK8Ri_K6fRUBtwd8T6PfQFyyUkr0a9NVM23kyYBxI6nA';
-
+		// AccessToken = 'eyJraWQiOiJJT2VcL3p1VXU1SlFaQklkTHlxdmdhdHk2VmpCZjlWT2ZXaWFva0R4dWsyRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIzYzFkNzkyMS1lYmZkLTRmMjItYTlkMS1iNmM3Mjc1NWY4MWIiLCJldmVudF9pZCI6IjQwODZiYzkzLTg5NDktNDI1MC04ZDExLWNlMGVkMGQ5NmE2MiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1NzY1MzE0MDAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0RITzQ4MXNIayIsImV4cCI6MTU3NjUzNTAwMCwiaWF0IjoxNTc2NTMxNDAwLCJ2ZXJzaW9uIjoyLCJqdGkiOiJjYmY4MjBiNC1iYWE2LTQ4MjQtYTkzOC1hOGU0MmFkNWIyN2MiLCJjbGllbnRfaWQiOiIyZWk3ZGh2cmpocWc3MWt2dHF2ajh1bXZkYSIsInVzZXJuYW1lIjoiM2MxZDc5MjEtZWJmZC00ZjIyLWE5ZDEtYjZjNzI3NTVmODFiIn0.Za174u73hcUWvhj-FvhZccw7pnIIP9NPUkDjFjx4ubvSfcX052iGA6pvJVRjSshfcokonMtZBhWWCS9Kxj-lWsx019QU63VTfCPnDmygjn_JgZT7FcTzfONunL_k0cBmry7vltHGDAjpv3Osw1O6ycRhcGs6wl4aCzZrKg9mwwWSHMCeM-jLkZHAvZPoCHhY0MXAfwe2zkcH3HLwZ32j-QNOngleLxyy-mUqgGuBIi4P7VR1vvZrlWQkniNpCynZTMNjUel0b2M7a7WJ1oPA6xlnoPCPDziziU89Hw8Ix6VK8Ri_K6fRUBtwd8T6PfQFyyUkr0a9NVM23kyYBxI6nA';
+		AccessToken = getToken();
 		function finalizeOrder(paypal, OrderId){
 			console.log("finalizeOrder function is executed.");
 			$.ajax({
