@@ -1,10 +1,11 @@
+const login_page = "https://login.moreforless.liuqx.net/login?client_id=2ei7dhvrjhqg71kvtqvj8umvda&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://moreforless.liuqx.net";
 var baseUrl = "https://api.moreforless.liuqx.net/v1";
 
 // find token from cookie
 var token = getToken();
 if (token===""){
     alert("Need Login First");
-    document.location = "index.html";
+    document.location = login_page;
 }
 // var token = "123";
 $(document).ready(function() {

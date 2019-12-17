@@ -75,6 +75,7 @@ function submitForm(e) {
     },
     success: function(response){
       alert("Successful");
+      document.location = "single-product.html?item_id=" + response;
     },
     error: function(xhr, status, error){
       errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
