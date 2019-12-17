@@ -3,9 +3,10 @@ var baseUrl = "https://api.moreforless.liuqx.net/v1";
 
 // find token from cookie
 var token = getToken();
+console.log("TOKEN: " + token);
 if (token===""){
-    alert("Need Login First");
-    document.location = login_page;
+    alert("Need to Login First");
+    window.location.href = login_page;
 }
 // var token = "123";
 $(document).ready(function() {
@@ -111,7 +112,7 @@ function update_user(event){
         },
         success: function(response){
             alert("Update Successful!");
-            document.location = "profile.html";
+            window.location.href = "profile.html";
         },
         error: function(xhr, status, error){
             errMsg = "Failed.<br>" + xhr.responseText + "<br>" + status + "<br>" + error;
