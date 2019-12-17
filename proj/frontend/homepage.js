@@ -1,6 +1,13 @@
 const baseUrl = "https://api.moreforless.liuqx.net/v1/";
 
 function loadHomepage(){
+    token = getQueryVariable("access_token");
+    if(token != null){
+        var oneDay = 24*60*60;
+        document.cookie = "token=" + token + ";path=/;max-age=" + oneDay;
+    }
+    alert(document.cookie);
+    alert(getToken());
     refreshRecomm();
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(refreshRecomm);
@@ -93,16 +100,3 @@ function addRecommItem(title, imgUrl, link, price, prevPrice = 0){
     $("#recomm").append(htmlStr);
 }
 
-
-
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split('&');
-  for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) == variable) {
-          return decodeURIComponent(pair[1]);
-      }
-  }
-  console.log('Query variable %s not found', variable);
-}

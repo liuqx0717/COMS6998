@@ -4,6 +4,7 @@ var searchStr = "";
 
 function loadSearchPage(){
     searchStr = getQueryVariable("s");
+    alert(getToken());
     refreshSearchResults(searchStr);
 }
 
