@@ -6,8 +6,8 @@ function loadHomepage(){
         var oneDay = 24*60*60;
         document.cookie = "token=" + token + ";path=/;max-age=" + oneDay;
     }
-    alert(document.cookie);
-    alert(getToken());
+    //alert(document.cookie);
+    //alert(getToken());
     refreshRecomm();
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(refreshRecomm);
@@ -18,7 +18,7 @@ function refreshRecomm(position = null){
     var queryStr = "";
     if(position != null){
         queryStr = "?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
-        alert(queryStr);
+        //alert(queryStr);
     }
 
     var data = "";

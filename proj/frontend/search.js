@@ -21,7 +21,7 @@ function refreshSearchResults(s){
         data: data,
         dataType: "json",
         success: function(response){
-            alert("search success");
+            //alert("search success");
             $("#searchResults").empty();
             for(var i = 0, l = response.length; i < l; i++){
                 var item = response[i];
