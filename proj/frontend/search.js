@@ -26,7 +26,7 @@ function refreshSearchResults(s){
             for(var i = 0, l = response.length; i < l; i++){
                 var item = response[i];
                 // TODO
-                var itemLink = "#";
+                var itemLink = "./single-product.html?item_id=" + item.id;
                 addSearchItem(item.title, item.imageUrl[0], itemLink, item.price, item.prevPrice);
             }
         },
