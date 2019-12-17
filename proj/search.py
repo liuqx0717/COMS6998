@@ -33,11 +33,6 @@ def search(q):
     query_body = {
         "query": {
             "bool": {
-                "must": {
-                    "match": {
-                        "available": 1
-                    }
-                },
                 "should": [
                     {"match": {"title": ""}},
                     {"match": {"description": ""}},
@@ -109,7 +104,12 @@ def search(q):
 
 
 def lambda_handler(event, context):
-    res = search(event)
+    print("event = ", json.dumps(event, indent=4))
+    q = {
+        "keyword": event['queryStringParameters']['s']
+    }
+    print("q = ", json.dumps(q, indent=4))
+    res = search(q)
     if res == 0:
         rsp = {
             "status": 200,
@@ -120,7 +120,6 @@ def lambda_handler(event, context):
         rsp = {
             "status": 200,
             "text": json.dumps(res)
-            # "headers": headers
         }
 
     print("rsp = ", rsp)
