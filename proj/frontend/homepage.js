@@ -6,8 +6,8 @@ function loadHomepage(){
         var oneDay = 24*60*60;
         document.cookie = "token=" + token + ";path=/;max-age=" + oneDay;
     }
-    //alert(document.cookie);
-    //alert(getToken());
+    alert(document.cookie);
+    alert(getToken());
     refreshRecomm();
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(refreshRecomm);
