@@ -41,7 +41,7 @@ function submitForm(e) {
   var title = $("#titleBox").val();
   var category = [$("#categoryBox").val()];
   console.log(category);
-  var decription = $("#descriptionBox").val();
+  var description = $("#descriptionBox").val();
   var price = parseFloat($("#priceBox").val());
   var prvprice = parseFloat($("#prvPriceBox").val());
   var stocks = parseInt($("#stocksBox").val());
@@ -56,11 +56,11 @@ function submitForm(e) {
     // "sellerInfo": seller_info,
     "title": title,
     "category": category,
-    "decription": decription,
+    "description": description,
     "imageUrl": img_url_list,
     "price": price,
     "prvPrice": prvprice,
-    "stocks": stocks
+    "stock": stocks
   });
   console.log(data);
 
