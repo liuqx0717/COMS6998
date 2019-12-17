@@ -4,60 +4,61 @@ var searchStr = "";
 
 function loadSearchPage(){
     searchStr = getQueryVariable("s");
-    alert(getToken());
+    $("#searchBox").val(searchStr);
+    //alert(getToken());
     refreshSearchResults(searchStr);
 }
 
 function refreshSearchResults(s){
     queryStr = "?s=" + encodeURIComponent(s);
-    alert(queryStr);
+    //alert(queryStr);
 
-    //var data = "";
-    //$.ajax({
-    //    type: "GET",
-    //    url: baseUrl + "search" + queryStr,
-    //    crossDomain: true,
-    //    data: data,
-    //    dataType: "json",
-    //    success: function(response){
-    //    /////////////////////////////////////
-    //    },
-    //    error: function(xhr, status, error){
-    //        errMsg = "Failed.<br>" + xhr.responseText;
-    //        alert(errMsg);
-    //    }
-    //});
-    //
-
-    response = [
-        {
-            "id": "123456",
-            "title": "title",
-            "imageUrl": [
-                "1.png",
-                "2.png"
-            ],
-            "price": 150,
-            "prevPrice": 200
+    var data = "";
+    $.ajax({
+        type: "GET",
+        url: baseUrl + "search" + queryStr,
+        crossDomain: true,
+        data: data,
+        dataType: "json",
+        success: function(response){
+            alert("search success");
+            $("#searchResults").empty();
+            for(var i = 0, l = response.length; i < l; i++){
+                var item = response[i];
+                // TODO
+                var itemLink = "#";
+                addSearchItem(item.title, item.imageUrl[0], itemLink, item.price, item.prevPrice);
+            }
         },
-        {
-            "id": "123457",
-            "title": "title2",
-            "imageUrl": [
-                "2.png",
-                "1.png"
-            ],
-            "price": 1500,
-            "prevPrice": 2000
+        error: function(xhr, status, error){
+            errMsg = "Failed.<br>" + xhr.responseText;
+            alert(errMsg);
         }
-    ];
-    $("#searchResults").empty();
-    for(var i = 0, l = response.length; i < l; i++){
-        var item = response[i];
-        // TODO
-        var itemLink = "#";
-        addSearchItem(item.title, item.imageUrl[0], itemLink, item.price, item.prevPrice);
-    }
+    });
+    
+
+    //response = [
+    //    {
+    //        "id": "123456",
+    //        "title": "title",
+    //        "imageUrl": [
+    //            "1.png",
+    //            "2.png"
+    //        ],
+    //        "price": 150,
+    //        "prevPrice": 200
+    //    },
+    //    {
+    //        "id": "123457",
+    //        "title": "title2",
+    //        "imageUrl": [
+    //            "2.png",
+    //            "1.png"
+    //        ],
+    //        "price": 1500,
+    //        "prevPrice": 2000
+    //    }
+    //];
 
 }
 
@@ -91,17 +92,3 @@ function addSearchItem(title, imgUrl, link, price, prevPrice = 0){
     $("#searchResults").append(htmlStr);
 }
 
-
-
-
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split('&');
-  for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) == variable) {
-          return decodeURIComponent(pair[1]);
-      }
-  }
-  console.log('Query variable %s not found', variable);
-}

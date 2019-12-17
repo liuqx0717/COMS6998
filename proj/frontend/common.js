@@ -16,3 +16,14 @@ function getToken() {
     var token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     return token;
 }
+
+
+// the event handler on search button
+function onSearch(e) {
+    e.preventDefault();
+
+    var s = $("#searchBox").val();
+    
+    window.location.href = "./search.html?s=" + encodeURIComponent(s);
+
+}

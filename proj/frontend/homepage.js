@@ -21,52 +21,51 @@ function refreshRecomm(position = null){
         alert(queryStr);
     }
 
-    //var data = "";
-    //$.ajax({
-    //    type: "GET",
-    //    url: baseUrl + "recommendation" + queryStr,
-    //    crossDomain: true,
-    //    data: data,
-    //    dataType: "json",
-    //    success: function(response){
-    //    /////////////////////////////////////
-    //    },
-    //    error: function(xhr, status, error){
-    //        errMsg = "Failed.<br>" + xhr.responseText;
-    //        alert(errMsg);
-    //    }
-    //});
-    //
-
-    response = [
-        {
-            "id": "123456",
-            "title": "title",
-            "imageUrl": [
-                "1.png",
-                "2.png"
-            ],
-            "price": 150,
-            "prevPrice": 200
+    var data = "";
+    $.ajax({
+        type: "GET",
+        url: baseUrl + "recommendation" + queryStr,
+        crossDomain: true,
+        data: data,
+        dataType: "json",
+        success: function(response){
+            $("#recomm").empty();
+            for(var i = 0, l = response.length; i < l; i++){
+                var item = response[i];
+                // TODO
+                var itemLink = "#";
+                addRecommItem(item.title, item.imageUrl[0], itemLink, item.price, item.prevPrice);
+            }
         },
-        {
-            "id": "123457",
-            "title": "title2",
-            "imageUrl": [
-                "2.png",
-                "1.png"
-            ],
-            "price": 1500,
-            "prevPrice": 2000
+        error: function(xhr, status, error){
+            errMsg = "Failed.<br>" + xhr.responseText;
+            alert(errMsg);
         }
-    ];
-    $("#recomm").empty();
-    for(var i = 0, l = response.length; i < l; i++){
-        var item = response[i];
-        // TODO
-        var itemLink = "#";
-        addRecommItem(item.title, item.imageUrl[0], itemLink, item.price, item.prevPrice);
-    }
+    });
+    
+
+    //response = [
+    //    {
+    //        "id": "123456",
+    //        "title": "title",
+    //        "imageUrl": [
+    //            "1.png",
+    //            "2.png"
+    //        ],
+    //        "price": 150,
+    //        "prevPrice": 200
+    //    },
+    //    {
+    //        "id": "123457",
+    //        "title": "title2",
+    //        "imageUrl": [
+    //            "2.png",
+    //            "1.png"
+    //        ],
+    //        "price": 1500,
+    //        "prevPrice": 2000
+    //    }
+    //];
 
 }
 
