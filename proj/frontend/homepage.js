@@ -1,13 +1,14 @@
 const baseUrl = "https://api.moreforless.liuqx.net/v1/";
 
 function loadHomepage(){
-    token = getQueryVariable("access_token");
+    //token = getQueryVariable("access_token");
+    token = getHashParams().access_token;
     if(token != null){
         var oneDay = 24*60*60;
         document.cookie = "token=" + token + ";path=/;max-age=" + oneDay;
     }
-    alert(document.cookie);
-    alert(getToken());
+    //alert(token);
+    //alert(getToken());
     refreshRecomm();
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(refreshRecomm);

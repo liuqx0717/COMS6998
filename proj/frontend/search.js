@@ -5,7 +5,7 @@ var searchStr = "";
 function loadSearchPage(){
     searchStr = getQueryVariable("s");
     $("#searchBox").val(searchStr);
-    alert(getToken());
+    //alert(getToken());
     refreshSearchResults(searchStr);
 }
 

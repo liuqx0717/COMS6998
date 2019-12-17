@@ -10,6 +10,17 @@ function getQueryVariable(variable) {
   console.log('Query variable %s not found', variable);
 }
 
+function getHashParams() {
+    var hash = window.location.hash.substring(1);
+    var params = {}
+    hash.split('&').map(hk => { 
+      let temp = hk.split('='); 
+        params[temp[0]] = temp[1] 
+    });
+    console.log(params);
+    return params;
+}
+
 
 // returns a string or null.
 function getToken() {
